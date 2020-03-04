@@ -1,0 +1,999 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>788</width>
+    <height>467</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
+  <property name="windowTitle">
+   <string>HuaGoScan For Linux</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="hg_sane_rsc.qrc">
+    <normaloff>:/image_rsc/logo.ico</normaloff>:/image_rsc/logo.ico</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget{background-color:#dadada}</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0">
+      <item>
+       <layout class="QHBoxLayout" name="shortcut_layout" stretch="0,0,0,0,0,0,0,0,0,0,0,0">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QToolButton" name="btn_settings">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>扫描仪设置</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnScannerSetting.png</normaloff>:/image_rsc/ButtonIco/Normal/btnScannerSetting.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_scan">
+          <property name="text">
+           <string>执行扫描</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnScan.png</normaloff>:/image_rsc/ButtonIco/Normal/btnScan.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_zoomFitH">
+          <property name="text">
+           <string>适应宽度</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnFitWindowWidth.png</normaloff>:/image_rsc/ButtonIco/Normal/btnFitWindowWidth.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_zoomFitHV">
+          <property name="text">
+           <string>适应屏幕</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnFitWindow.png</normaloff>:/image_rsc/ButtonIco/Normal/btnFitWindow.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_zoomIn">
+          <property name="text">
+           <string>放大</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnZoomOut.png</normaloff>:/image_rsc/ButtonIco/Normal/btnZoomOut.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_zoomOut">
+          <property name="text">
+           <string>缩小</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnZoomIn.png</normaloff>:/image_rsc/ButtonIco/Normal/btnZoomIn.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_zoomOri">
+          <property name="text">
+           <string>原始大小</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnOriginalSize.png</normaloff>:/image_rsc/ButtonIco/Normal/btnOriginalSize.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_antiClockRotate">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>逆时针旋转</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnRotateLeft.png</normaloff>:/image_rsc/ButtonIco/Normal/btnRotateLeft.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_clockRotate">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>顺时针旋转</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnRotateRight.png</normaloff>:/image_rsc/ButtonIco/Normal/btnRotateRight.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_prePage">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>上一页</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnPrevious.png</normaloff>:/image_rsc/ButtonIco/Normal/btnPrevious.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_nextPage">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>下一页</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnNext.png</normaloff>:/image_rsc/ButtonIco/Normal/btnNext.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_help">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>帮助</string>
+          </property>
+          <property name="icon">
+           <iconset resource="hg_sane_rsc.qrc">
+            <normaloff>:/image_rsc/ButtonIco/Normal/btnHelp.png</normaloff>:/image_rsc/ButtonIco/Normal/btnHelp.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,1">
+      <item>
+       <widget class="QGraphicsView" name="graphicsView">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="backgroundBrush">
+         <brush brushstyle="NoBrush">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </property>
+        <property name="foregroundBrush">
+         <brush brushstyle="NoBrush">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </property>
+        <property name="dragMode">
+         <enum>QGraphicsView::ScrollHandDrag</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="ImageList" name="listWidget"/>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="lab_imgSizeTxt">
+            <property name="text">
+             <string>图像尺寸：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lab_imgSize">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="lab_imgFormatTxt">
+            <property name="text">
+             <string>图像格式：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lab_imgFormat">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="lab_imgDataTxt">
+            <property name="text">
+             <string>图像大小：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lab_imgData">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QLabel" name="lab_admin">
+        <property name="maximumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="hg_sane_rsc.qrc">:/image_rsc/statusBar_admin.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lab_scanCnetTxt">
+        <property name="text">
+         <string>扫描仪连接：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lab_scanCnet">
+        <property name="text">
+         <string>未连接</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_statusBarV1">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lab_scanStatusTxt">
+        <property name="text">
+         <string>扫描仪状态：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lab_scanStatus">
+        <property name="text">
+         <string>--</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_statusBarV2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lab_pageNumTxt">
+        <property name="text">
+         <string>页数：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lab_currPageNum">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lab_pageNumSep">
+        <property name="text">
+         <string>/</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lab_totalPageNum">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_statusBarV3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lab_selectPageNumTxt">
+        <property name="text">
+         <string>已选中页数：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lab_selectPageNum">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>788</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <widget class="QMenu" name="menu_export">
+     <property name="title">
+      <string>导出文件...</string>
+     </property>
+     <addaction name="act_export_multiPdf"/>
+     <addaction name="act_export_multiTif"/>
+     <addaction name="act_export_multiOfd"/>
+    </widget>
+    <addaction name="act_open"/>
+    <addaction name="act_save"/>
+    <addaction name="act_saveAs"/>
+    <addaction name="act_close"/>
+    <addaction name="act_closeAll"/>
+    <addaction name="act_imgInfo"/>
+    <addaction name="menu_export"/>
+    <addaction name="act_print"/>
+    <addaction name="act_quit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Scan">
+    <property name="title">
+     <string>扫描</string>
+    </property>
+    <addaction name="act_devSelect"/>
+    <addaction name="act_scanSettings"/>
+    <addaction name="act_scanSingle"/>
+    <addaction name="act_scanLot"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+    <addaction name="act_verInfo"/>
+    <addaction name="act_help"/>
+   </widget>
+   <widget class="QMenu" name="menu_View">
+    <property name="title">
+     <string>查看</string>
+    </property>
+    <widget class="QMenu" name="menu_splitView">
+     <property name="title">
+      <string>拆分视图</string>
+     </property>
+     <addaction name="act_splitView_1"/>
+     <addaction name="act_splitView_2"/>
+     <addaction name="act_splitView_4"/>
+     <addaction name="act_splitView_8"/>
+    </widget>
+    <addaction name="act_toolBar"/>
+    <addaction name="act_statusBar"/>
+    <addaction name="act_thumBar"/>
+    <addaction name="separator"/>
+    <addaction name="act_zoomIn"/>
+    <addaction name="act_zoomOut"/>
+    <addaction name="act_zoomFitHV"/>
+    <addaction name="act_zoomFitH"/>
+    <addaction name="act_zoomOri"/>
+    <addaction name="menu_splitView"/>
+    <addaction name="act_fullScreen"/>
+   </widget>
+   <widget class="QMenu" name="menu_Edit">
+    <property name="title">
+     <string>编辑</string>
+    </property>
+    <widget class="QMenu" name="menu_antiClockRotate">
+     <property name="title">
+      <string>逆时针旋转</string>
+     </property>
+     <addaction name="act_antiClock_currPage"/>
+     <addaction name="act_antiClock_allPage"/>
+     <addaction name="act_antiClock_oddPage"/>
+     <addaction name="act_antiClock_evenPage"/>
+    </widget>
+    <widget class="QMenu" name="menu_clockRotate">
+     <property name="title">
+      <string>顺时针旋转</string>
+     </property>
+     <addaction name="act_clock_currPage"/>
+     <addaction name="act_clock_allPage"/>
+     <addaction name="act_clock_oddPage"/>
+     <addaction name="act_clock_evenPage"/>
+    </widget>
+    <addaction name="act_BCG"/>
+    <addaction name="menu_antiClockRotate"/>
+    <addaction name="menu_clockRotate"/>
+   </widget>
+   <widget class="QMenu" name="menu_Pages">
+    <property name="title">
+     <string>页面</string>
+    </property>
+    <widget class="QMenu" name="menu_insertPage">
+     <property name="title">
+      <string>插入/添加页面</string>
+     </property>
+     <addaction name="action1"/>
+    </widget>
+    <addaction name="act_nextPage"/>
+    <addaction name="act_prePage"/>
+    <addaction name="act_lastPage"/>
+    <addaction name="act_firstPage"/>
+    <addaction name="act_chosenPage"/>
+    <addaction name="act_deletePage"/>
+    <addaction name="menu_insertPage"/>
+   </widget>
+   <widget class="QMenu" name="menu_user">
+    <property name="title">
+     <string>用户</string>
+    </property>
+    <addaction name="act_adminLogin"/>
+    <addaction name="act_logOutput"/>
+    <addaction name="act_logClr"/>
+    <addaction name="separator"/>
+    <addaction name="act_consumeStatus"/>
+    <addaction name="separator"/>
+    <addaction name="act_setSleepTime"/>
+    <addaction name="separator"/>
+    <addaction name="act_cacheClr"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Scan"/>
+   <addaction name="menu_Edit"/>
+   <addaction name="menu_View"/>
+   <addaction name="menu_Pages"/>
+   <addaction name="menu_user"/>
+   <addaction name="menu_Help"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="act_open">
+   <property name="text">
+    <string>打开..</string>
+   </property>
+  </action>
+  <action name="act_close">
+   <property name="text">
+    <string>关闭</string>
+   </property>
+  </action>
+  <action name="act_devSelect">
+   <property name="text">
+    <string>选择扫描仪..</string>
+   </property>
+  </action>
+  <action name="act_save">
+   <property name="text">
+    <string>保存..</string>
+   </property>
+  </action>
+  <action name="act_saveAs">
+   <property name="text">
+    <string>另存为..</string>
+   </property>
+  </action>
+  <action name="act_scanSettings">
+   <property name="text">
+    <string>扫描仪设置..</string>
+   </property>
+  </action>
+  <action name="act_verInfo">
+   <property name="text">
+    <string>关于..</string>
+   </property>
+   <property name="iconText">
+    <string>版本信息..</string>
+   </property>
+  </action>
+  <action name="act_zoomIn">
+   <property name="text">
+    <string>放大</string>
+   </property>
+  </action>
+  <action name="act_zoomOut">
+   <property name="text">
+    <string>缩小</string>
+   </property>
+  </action>
+  <action name="act_thumBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>缩略图栏</string>
+   </property>
+  </action>
+  <action name="act_zoomFitHV">
+   <property name="text">
+    <string>适应屏幕</string>
+   </property>
+  </action>
+  <action name="act_zoomOri">
+   <property name="text">
+    <string>原始大小</string>
+   </property>
+  </action>
+  <action name="act_closeAll">
+   <property name="text">
+    <string>关闭所有文件</string>
+   </property>
+  </action>
+  <action name="act_imgInfo">
+   <property name="text">
+    <string>图像信息..</string>
+   </property>
+  </action>
+  <action name="act_print">
+   <property name="text">
+    <string>打印..</string>
+   </property>
+  </action>
+  <action name="act_quit">
+   <property name="text">
+    <string>退出</string>
+   </property>
+  </action>
+  <action name="act_scanSingle">
+   <property name="text">
+    <string>扫描单页</string>
+   </property>
+  </action>
+  <action name="act_scanLot">
+   <property name="text">
+    <string>扫描批次到文件..</string>
+   </property>
+  </action>
+  <action name="act_BCG">
+   <property name="text">
+    <string>亮度/对比度</string>
+   </property>
+  </action>
+  <action name="act_antiClock_currPage">
+   <property name="text">
+    <string>当前页面</string>
+   </property>
+   <property name="iconText">
+    <string>当前页面</string>
+   </property>
+  </action>
+  <action name="act_antiClock_allPage">
+   <property name="text">
+    <string>全部页面</string>
+   </property>
+   <property name="iconText">
+    <string>全部页面</string>
+   </property>
+  </action>
+  <action name="act_antiClock_oddPage">
+   <property name="text">
+    <string>奇数页面</string>
+   </property>
+   <property name="iconText">
+    <string>奇数页面</string>
+   </property>
+  </action>
+  <action name="act_antiClock_evenPage">
+   <property name="text">
+    <string>偶数页面</string>
+   </property>
+   <property name="iconText">
+    <string>偶数页面</string>
+   </property>
+  </action>
+  <action name="act_clock_currPage">
+   <property name="text">
+    <string>当前页面</string>
+   </property>
+  </action>
+  <action name="act_clock_allPage">
+   <property name="text">
+    <string>全部页面</string>
+   </property>
+  </action>
+  <action name="act_clock_oddPage">
+   <property name="text">
+    <string>奇数页面</string>
+   </property>
+  </action>
+  <action name="act_clock_evenPage">
+   <property name="text">
+    <string>偶数页面</string>
+   </property>
+  </action>
+  <action name="act_toolBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>工具栏</string>
+   </property>
+  </action>
+  <action name="act_statusBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>状态栏</string>
+   </property>
+  </action>
+  <action name="act_zoomFitH">
+   <property name="text">
+    <string>适应宽度</string>
+   </property>
+  </action>
+  <action name="act_fullScreen">
+   <property name="text">
+    <string>全屏</string>
+   </property>
+  </action>
+  <action name="act_splitView_1">
+   <property name="text">
+    <string>1</string>
+   </property>
+  </action>
+  <action name="act_splitView_2">
+   <property name="text">
+    <string>2</string>
+   </property>
+  </action>
+  <action name="act_splitView_4">
+   <property name="text">
+    <string>4</string>
+   </property>
+  </action>
+  <action name="act_splitView_8">
+   <property name="text">
+    <string>8</string>
+   </property>
+  </action>
+  <action name="act_help">
+   <property name="text">
+    <string>帮助文档..</string>
+   </property>
+  </action>
+  <action name="act_nextPage">
+   <property name="text">
+    <string>下一页</string>
+   </property>
+  </action>
+  <action name="act_prePage">
+   <property name="text">
+    <string>上一页</string>
+   </property>
+  </action>
+  <action name="act_lastPage">
+   <property name="text">
+    <string>最后一页</string>
+   </property>
+  </action>
+  <action name="act_firstPage">
+   <property name="text">
+    <string>第一页</string>
+   </property>
+  </action>
+  <action name="act_chosenPage">
+   <property name="text">
+    <string>指定页面..</string>
+   </property>
+  </action>
+  <action name="act_deletePage">
+   <property name="text">
+    <string>删除页面</string>
+   </property>
+  </action>
+  <action name="action1">
+   <property name="text">
+    <string>1</string>
+   </property>
+  </action>
+  <action name="act_logOutput">
+   <property name="text">
+    <string>导出日志文档..</string>
+   </property>
+  </action>
+  <action name="act_consumeStatus">
+   <property name="text">
+    <string>耗材状态查询..</string>
+   </property>
+  </action>
+  <action name="act_logClr">
+   <property name="text">
+    <string>清空日志文档</string>
+   </property>
+  </action>
+  <action name="act_export_multiPdf">
+   <property name="text">
+    <string>导出为多页pdf文档..</string>
+   </property>
+  </action>
+  <action name="act_export_multiTif">
+   <property name="text">
+    <string>导出为多页tif文档..</string>
+   </property>
+  </action>
+  <action name="act_setSleepTime">
+   <property name="text">
+    <string>设置休眠时间..</string>
+   </property>
+  </action>
+  <action name="act_cacheClr">
+   <property name="text">
+    <string>缓存清零</string>
+   </property>
+  </action>
+  <action name="act_export_multiOfd">
+   <property name="text">
+    <string>导出为多页ofd文档..</string>
+   </property>
+  </action>
+  <action name="act_adminLogin">
+   <property name="text">
+    <string>管理员权限..</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ImageList</class>
+   <extends>QListWidget</extends>
+   <header>imageList.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="hg_sane_rsc.qrc"/>
+ </resources>
+ <connections/>
+</ui>
