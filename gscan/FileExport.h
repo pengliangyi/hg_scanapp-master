@@ -1,4 +1,4 @@
-#ifndef FILEEXPORT_H
+﻿#ifndef FILEEXPORT_H
 #define FILEEXPORT_H
 #include <QString>
 #include <QSize>

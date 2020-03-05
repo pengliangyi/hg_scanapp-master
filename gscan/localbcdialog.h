@@ -1,4 +1,4 @@
-#ifndef LOCALBCDIALOG_H
+﻿#ifndef LOCALBCDIALOG_H
 #define LOCALBCDIALOG_H
 
 #include <QDialog>

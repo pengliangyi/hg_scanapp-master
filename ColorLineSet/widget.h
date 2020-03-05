@@ -1,4 +1,4 @@
-#ifndef WIDGET_H
+ï»¿#ifndef WIDGET_H
 #define WIDGET_H
 
 #include <QWidget>
@@ -25,9 +25,9 @@ class  Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = nullptr);
     ~Widget();
-    void initAllLstPnt();   //³õÊ¼»¯ËùÓĞÑÕÉ«ÇúÏß
-    void setLstPnt_RGB(const QList<QPoint>& plst);  //ÉèÖÃÉú³ÉRGBÇúÏßµÄ¹Ø¼üµã£¨<=4)
-    QList<QPoint> getLstPnt_RGB()const; //»ñÈ¡Éú³ÉRGBÇúÏßµÄ¹Ø¼üµã
+    void initAllLstPnt();   //åˆå§‹åŒ–æ‰€æœ‰é¢œè‰²æ›²çº¿
+    void setLstPnt_RGB(const QList<QPoint>& plst);  //è®¾ç½®ç”ŸæˆRGBæ›²çº¿çš„å…³é”®ç‚¹ï¼ˆ<=4)
+    QList<QPoint> getLstPnt_RGB()const; //è·å–ç”ŸæˆRGBæ›²çº¿çš„å…³é”®ç‚¹
     void setLstPnt_RED(const QList<QPoint>& plst);
     QList<QPoint> getLstPnt_RED()const;
     void setLstPnt_BLUE(const QList<QPoint>& plst);
@@ -53,8 +53,8 @@ public:
     QList<QPoint> getGrayKeyPoint()const;
     void setGrayKeyPoint(const QList<QPoint>& pVec);
 
-    void setHist_RGB(const QVector<int>& hist);//ÉèÖÃRGBµÄ±³¾°Ö±·½Í¼
-    QVector<int> getHist_RGB()const;//»ñÈ¡RGBµÄ±³¾°Ö±·½Í¼
+    void setHist_RGB(const QVector<int>& hist);//è®¾ç½®RGBçš„èƒŒæ™¯ç›´æ–¹å›¾
+    QVector<int> getHist_RGB()const;//è·å–RGBçš„èƒŒæ™¯ç›´æ–¹å›¾
     void setHist_RED(const QVector<int>& hist);
     QVector<int> getHist_RED()const;
     void setHist_BLUE(const QVector<int>& hist);
@@ -64,37 +64,37 @@ public:
     void setHist_GRAY(const QVector<int>& hist);
     QVector<int> getHist_GRAY()const;
 
-    void getCurLineLUT(uchar* table, size_t length = 256);//»ñÈ¡µ±Ç°ÇúÏßÉÏµÄËùÓĞµã²¢´æÈëtable
-    QVector<unsigned char> getCurLinePntVec();//»ñÈ¡µ±Ç°ÇúÏßÉÏµÄËùÓĞµã
-    void setXCoorVal(const int &xVal);//ÉèÖÃ±»Ñ¡ÖĞµÄµãµÄX×ø±ê
-    void setYCoorVal(const int &yVal);//ÉèÖÃ±»Ñ¡ÖĞµÄµãµÄY×ø±ê
-    void updateCurLinePnt(const int& colType);//¸ù¾İµ±Ç°ËùÑ¡ÑÕÉ«£¨colType£©ÖØ»æ½çÃæ
-    void initSelectColLine(const int& colType);//³õÊ¼»¯µ±Ç°ËùÑ¡ÑÕÉ«£¨colType£©½çÃæµÄÇúÏß
-    void SetAllLinePnt(QVector<int>& all);//ÉèÖÃ×Ô¶¨ÒåÇúÏßµÄËùÓĞµã
+    void getCurLineLUT(uchar* table, size_t length = 256);//è·å–å½“å‰æ›²çº¿ä¸Šçš„æ‰€æœ‰ç‚¹å¹¶å­˜å…¥table
+    QVector<unsigned char> getCurLinePntVec();//è·å–å½“å‰æ›²çº¿ä¸Šçš„æ‰€æœ‰ç‚¹
+    void setXCoorVal(const int &xVal);//è®¾ç½®è¢«é€‰ä¸­çš„ç‚¹çš„Xåæ ‡
+    void setYCoorVal(const int &yVal);//è®¾ç½®è¢«é€‰ä¸­çš„ç‚¹çš„Yåæ ‡
+    void updateCurLinePnt(const int& colType);//æ ¹æ®å½“å‰æ‰€é€‰é¢œè‰²ï¼ˆcolTypeï¼‰é‡ç»˜ç•Œé¢
+    void initSelectColLine(const int& colType);//åˆå§‹åŒ–å½“å‰æ‰€é€‰é¢œè‰²ï¼ˆcolTypeï¼‰ç•Œé¢çš„æ›²çº¿
+    void SetAllLinePnt(QVector<int>& all);//è®¾ç½®è‡ªå®šä¹‰æ›²çº¿çš„æ‰€æœ‰ç‚¹
 
 signals:
-    void dragPointChecked(bool);//ÇúÏßÉÏµÄµã±»Ñ¡ÖĞµÄĞÅºÅ
-    void mouseLeaveSig();//Êó±êÀë¿ª¿Ø¼şµÄĞÅºÅ
-    void mouseCoordSig(QPoint pos);//Êó±êµÄ×ø±êĞÅºÅ
+    void dragPointChecked(bool);//æ›²çº¿ä¸Šçš„ç‚¹è¢«é€‰ä¸­çš„ä¿¡å·
+    void mouseLeaveSig();//é¼ æ ‡ç¦»å¼€æ§ä»¶çš„ä¿¡å·
+    void mouseCoordSig(QPoint pos);//é¼ æ ‡çš„åæ ‡ä¿¡å·
     void lineChangeSig();
 
 private:
-    void initInterface();//³õÊ¼»¯½çÃæ
+    void initInterface();//åˆå§‹åŒ–ç•Œé¢
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent*);
     void mouseMoveEvent(QMouseEvent*);
     void mouseReleaseEvent(QMouseEvent*);
     void enterEvent(QEvent*);
     void leaveEvent(QEvent*);
-    void drawCoordinate(QPainter&);//»­Ö±½Ç×ø±ê
-    void drawBackgroudColor(QPainter&,QVector<int>&);//»­±³¾°Ö±·½Í¼
-    void drawBackColorBySlc(QPainter&);//»­²»Í¬µÄ±³¾°Ö±·½Í¼
-    void drawCoorScale(QPainter&);//»­ĞéÏß¿Ì¶È
-    void drawLineFromPoint(QList<QPoint> &plst, const int &col);//¸ù¾İ¶àµãÇó³öÇúÏß·½³Ì£¬²¢»­³öÇúÏß
-    void drawAllPoint(QPainter&);//»­³öÉú³ÉÇúÏßµÄ¹Ø¼üµã
-    void drawCurveByColor(QPainter&);//»­²»Í¬µÄÑÕÉ«ÇúÏß
-    void drawLineByVector(QPainter&,QVector<int>&);//½«Êı×éµÄËùÓĞµãÁ¬½Ó»æÖÆÇúÏß
-    int caculateAllMi(int num,int n);//¼ÆËãnumµÄn´Î·½µÄÖµ
+    void drawCoordinate(QPainter&);//ç”»ç›´è§’åæ ‡
+    void drawBackgroudColor(QPainter&,QVector<int>&);//ç”»èƒŒæ™¯ç›´æ–¹å›¾
+    void drawBackColorBySlc(QPainter&);//ç”»ä¸åŒçš„èƒŒæ™¯ç›´æ–¹å›¾
+    void drawCoorScale(QPainter&);//ç”»è™šçº¿åˆ»åº¦
+    void drawLineFromPoint(QList<QPoint> &plst, const int &col);//æ ¹æ®å¤šç‚¹æ±‚å‡ºæ›²çº¿æ–¹ç¨‹ï¼Œå¹¶ç”»å‡ºæ›²çº¿
+    void drawAllPoint(QPainter&);//ç”»å‡ºç”Ÿæˆæ›²çº¿çš„å…³é”®ç‚¹
+    void drawCurveByColor(QPainter&);//ç”»ä¸åŒçš„é¢œè‰²æ›²çº¿
+    void drawLineByVector(QPainter&,QVector<int>&);//å°†æ•°ç»„çš„æ‰€æœ‰ç‚¹è¿æ¥ç»˜åˆ¶æ›²çº¿
+    int caculateAllMi(int num,int n);//è®¡ç®—numçš„næ¬¡æ–¹çš„å€¼
 
 private:
     Ui::Widget *ui;

@@ -1,4 +1,4 @@
-#include "localbcdialog.h"
+ï»¿#include "localbcdialog.h"
 #include "ui_localbcdialog.h"
 #include "mainwindow.h"
 #include <QMessageBox>
@@ -24,7 +24,7 @@ LocalBCDialog::LocalBCDialog(QWidget *parent, QImage *src, QString appDirPath) :
     srcImg = src->depth() == 32 ? src->convertToFormat(QImage::Format_RGB888) : *src;
     if(srcImg.isNull())
     {
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("¼ÓÔØÍ¼ÏñÊ§°Ü£¡ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("åŠ è½½å›¾åƒå¤±è´¥ï¼ "));
         close();
     }
     srcImg = srcImg.scaled(imgSizeWidth,imgSizeHeight,Qt::KeepAspectRatio);

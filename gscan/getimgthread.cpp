@@ -1,4 +1,4 @@
-#include "getimgthread.h"
+﻿#include "getimgthread.h"
 #include <opencv2/opencv.hpp>
 #include <thread>
 #include <QDebug>

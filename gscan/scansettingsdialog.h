@@ -1,9 +1,10 @@
-#ifndef SCANSETTINGSDIALOG_H
+﻿#ifndef SCANSETTINGSDIALOG_H
 #define SCANSETTINGSDIALOG_H
 
 #include <QDialog>
 #include <QDir>
 #include <QListWidget>
+#include <QSettings>
 #include "settings.h"
 
 
@@ -90,6 +91,7 @@ private:
     QStringList check_ini(QString dirPath);
     QVector<QList<QPoint>> rgbKeyPoint;
     QList<QPoint> grayKeyPoint;
+    QSettings *app_ini;
 
 };
 

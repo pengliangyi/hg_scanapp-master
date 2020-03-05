@@ -1,4 +1,4 @@
-#include "cutpapertool.h"
+﻿#include "cutpapertool.h"
 #include "ui_cutpapertool.h"
 #include <QDebug>
 #include <QValidator>

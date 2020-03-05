@@ -1,4 +1,4 @@
-#ifndef CUTPAPERTOOL_H
+﻿#ifndef CUTPAPERTOOL_H
 #define CUTPAPERTOOL_H
 
 #include "cutdialogdef.h"

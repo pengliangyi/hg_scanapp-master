@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+ï»¿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "scansettingsdialog.h"
 #include "aboutdialog.h"
@@ -37,7 +37,7 @@ QString getUsrName()
     pwd = getpwuid(getuid());
     return pwd->pw_name;
 #else
-    return "LynnPeng";
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif // !WIN32
 }
 
@@ -63,13 +63,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     globalImg = nullptr;//clear global image
     globalImgPath = "";//clear global image path
-    appVersion = "1.0.2";
+    appVersion = "2.0.0";
 #ifndef WIN32
     appDirPath = "/home/" + usrName + "/HuaGoScan-" + appVersion;
     sysDirPath = "/usr/share/doc/HuaGoScan-" + appVersion;
 #else
-    appDirPath = "C:/Users/" + usrName + "AppData/Local/HuaGoScan-" + appVersion;
-    sysDirPath = "C:/Program Files/HuaGoScan-" + appVersion;
+    appDirPath = "D:/Program Files/HuaGoScan-" + appVersion;
+    sysDirPath = usrName + "/AppData/Local/HuaGoScan-" + appVersion;
 #endif
     pic = new MyGraphicsScene;
     ui->graphicsView->setScene(pic);
@@ -80,8 +80,8 @@ MainWindow::MainWindow(QWidget *parent) :
     localPara = new LocalParams;
     //sacn processing dialog settings
     //mes_box->setWindowFlag(Qt::FramelessWindowHint);
-    mes_box->setText(QStringLiteral("É¨ÃèÖĞ..."));
-    mes_box->addButton(QMessageBox::No)->setText(QStringLiteral("È¡ÏûÉ¨Ãè"));
+    mes_box->setText(tr("æ‰«æä¸­..."));
+    mes_box->addButton(QMessageBox::No)->setText(tr("å–æ¶ˆæ‰«æ"));
     mes_box->addButton(QMessageBox::Cancel);
     mes_box->setDefaultButton(QMessageBox::Cancel);
     mes_box->button(QMessageBox::Cancel)->setVisible(false);
@@ -144,8 +144,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
       else
       {
           int a = QMessageBox::question(this,
-                                QStringLiteral("¾¯¸æ "),
-                                QStringLiteral("±£´æÅäÖÃÊ§°Ü£¬ÇëÖØÊÔ¡£"),
+                                tr("warning"),
+                                tr("Settings' saving failed. Continue to exit?"),
                                 QMessageBox::Yes|QMessageBox::No,
                                 QMessageBox::Yes);
           if(a == QMessageBox::No)
@@ -157,7 +157,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::initFiles()
 {
     //create app user dir
-    tmpdir.mkdir(appDirPath);
+    tmpdir.mkpath(appDirPath);
     //create tmp images dir
 	tmpdir.mkdir(appDirPath+"/tmp");
     tmpdir = QDir(appDirPath+"/tmp");
@@ -276,8 +276,8 @@ void MainWindow::initUsbDevice()
     if (m_scanner.get() && m_scanner->open())
     {
         qDebug("device opened");
-        ui->lab_scanCnet->setText(QStringLiteral(""ÒÑÁ¬½Ó "));
-        ui->lab_scanStatus->setText(QStringLiteral("¿ÕÏĞ "));
+        ui->lab_scanCnet->setText(tr(""å·²è¿æ¥ "));
+        ui->lab_scanStatus->setText(tr("ç©ºé—² "));
         f_connection = true;
         writeLog("device connected.");
         checkRollerScanNum();
@@ -508,7 +508,7 @@ void MainWindow::loadImgToListview(QString filePath)
     {
         delete globalImg;
         globalImg = nullptr;
-        QMessageBox::information(this,QStringLiteral("ĞÅÏ¢ "),QStringLiteral("¼ÓÔØÍ¼ÏñÊ§°Ü! "));
+        QMessageBox::information(this,tr("ä¿¡æ¯ "),tr("åŠ è½½å›¾åƒå¤±è´¥! "));
         writeLog("load an empty image.");
     }
     else
@@ -533,13 +533,13 @@ void MainWindow::scanLots(QString dirpath, bool isPreScan, QString format)
 //    {
 //        m_scanner->rst_err_code();
 //        settingsPara->ScanCount = scanNum;
-//        QMessageBox::information(this,QStringLiteral("ĞÅÏ¢ "),QStringLiteral("É¨ÃèÒÇ´¦ÓÚ¼ÆÊıÄ£Ê½£¬ÇëÏÈÍË³ö¼ÆÊıÄ£Ê½ÔÙÉ¨Ãè¡£ "));
+//        QMessageBox::information(this,tr("ä¿¡æ¯ "),tr("æ‰«æä»ªå¤„äºè®¡æ•°æ¨¡å¼ï¼Œè¯·å…ˆé€€å‡ºè®¡æ•°æ¨¡å¼å†æ‰«æã€‚ "));
 //    }
 //    else
 //    {
 //        this->toolBar->setEnabled(false);
 //        this->menuBar()->setEnabled(false);
-//        ui->lab_scanStatus->setText(QStringLiteral("É¨ÃèÖĞ "));
+//        ui->lab_scanStatus->setText(tr("æ‰«æä¸­ "));
 //        ui->listWidget->setSelectionMode(QAbstractItemView::SingleSelection);
 //        m_thread->setThreadPara(m_scanner,dirpath,format,tmpdir,ocrPDF,settingsPara->ImageProcessParam.DestResulution,settingsPara->paperSize);
 //        //check if ocr or jpg compression function is chosen
@@ -562,7 +562,7 @@ void MainWindow::scanLots(QString dirpath, bool isPreScan, QString format)
 //            m_scanner->stop();
 //        this->toolBar->setEnabled(true);
 //        this->menuBar()->setEnabled(true);
-//        ui->lab_scanStatus->setText(QStringLiteral("¿ÕÏĞ "));
+//        ui->lab_scanStatus->setText(tr("ç©ºé—² "));
 //        ui->listWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
 //    }
 }
@@ -585,6 +585,7 @@ bool MainWindow::writeIni()
 {
     if(settings_Ini->isWritable())
     {
+          settings_Ini->setValue("base_colorModeIndex",0);//test
 //        settings_Ini->setValue("base_colorModeIndex",settingsPara->ColorMode);
 //        settings_Ini->setValue("img_pixType",settingsPara->ImageProcessParam.PixType);
 //        settings_Ini->setValue("base_isMultiOutput",settingsPara->ImageProcessParam.multiOutput.canMultiOutput);
@@ -685,7 +686,7 @@ bool MainWindow::writeColorTableFile()
 {
     if(!colorTableFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("Ğ´colorTableÊ§°Ü£¬ÇëÖØÊÔ£¡ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("å†™colorTableå¤±è´¥ï¼Œè¯·é‡è¯•ï¼ "));
         return 0;
     }
     QDataStream stream(&colorTableFile);
@@ -699,7 +700,7 @@ bool MainWindow::writeGreyTableFile()
 {
     if(!greyTableFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("Ğ´greyTableÊ§°Ü£¬ÇëÖØÊÔ£¡ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("å†™greyTableå¤±è´¥ï¼Œè¯·é‡è¯•ï¼ "));
         return 0;
     }
     QDataStream stream(&greyTableFile);
@@ -723,7 +724,7 @@ void MainWindow::readColorTableFile()
     }
     if(!colorTableFile.open(QIODevice::ReadOnly))
     {
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("¶ÁÈ¡colorTableÊ§°Ü£¬ÇëÖØÆôÓ¦ÓÃ³ÌĞò£¡ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("è¯»å–colorTableå¤±è´¥ï¼Œè¯·é‡å¯åº”ç”¨ç¨‹åºï¼ "));
         close();
         return;
     }
@@ -754,7 +755,7 @@ void MainWindow::readGreyTableFile()
     }
     if(!greyTableFile.open(QIODevice::ReadOnly))
     {
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("¶ÁÈ¡greyTableÊ§°Ü£¬ÇëÖØÆôÓ¦ÓÃ³ÌĞò£¡ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("è¯»å–greyTableå¤±è´¥ï¼Œè¯·é‡å¯åº”ç”¨ç¨‹åºï¼ "));
         close();
         return;
     }
@@ -773,7 +774,7 @@ void MainWindow::readGreyTableFile()
 }
 void MainWindow::saveAsFunc()
 {
-    QFileDialog saveAsDialog(nullptr,QStringLiteral("Í¼ÏñÁí´æÎª "),"","(*.jpg);;(*.jpeg);;(*.png);;(*.bmp);;(*.pdf);;(*.tif)");
+    QFileDialog saveAsDialog(nullptr,tr("å›¾åƒå¦å­˜ä¸º "),"","(*.jpg);;(*.jpeg);;(*.png);;(*.bmp);;(*.pdf);;(*.tif)");
     saveAsDialog.setAcceptMode(QFileDialog::AcceptSave);
     QIcon icon("url(:/image_rsc/logo.ico)");
     saveAsDialog.setWindowIcon(icon);
@@ -834,50 +835,50 @@ void MainWindow::on_getDevError(int err_code)
     switch(err_code)
     {
     case HAVE_ERROR:
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("·¢ÉúÎ´Öª´íÎó£¬É¨ÃèÖĞÖ¹¡£"));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("å‘ç”ŸæœªçŸ¥é”™è¯¯ï¼Œæ‰«æä¸­æ­¢ã€‚"));
         str = "Undefined error,scan stopped. ERRCODE="+QString::number(err_code)+" .";
         writeLog(str);
         break;
     case OPEN_COVER:
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("»ú¸Ç±»´ò¿ª£¡ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("æœºç›–è¢«æ‰“å¼€ï¼ "));
         str = "Cover opened,scan stopped. ERRCODE="+QString::number(err_code)+" .";
         writeLog(str);
         break;
     case NO_FEED:
-        QMessageBox::information(this,QStringLiteral("ÌáÊ¾ "),QStringLiteral("Î´¼ì²âµ½ÎÄ¸å£¬Çë·ÅÈëĞèÒªÉ¨ÃèµÄÎÄ¸å¡£ "));
+        QMessageBox::information(this,tr("æç¤º "),tr("æœªæ£€æµ‹åˆ°æ–‡ç¨¿ï¼Œè¯·æ”¾å…¥éœ€è¦æ‰«æçš„æ–‡ç¨¿ã€‚ "));
         break;
     case FEED_IN_ERROR:
-        QMessageBox::information(this,QStringLiteral("ÌáÊ¾ "),QStringLiteral("½øÖ½Ê§°Ü£¬Çë´ò¿ª»ú¸ÇÖØĞÂÕûÀíÎÄ¸å¡£ "));
+        QMessageBox::information(this,tr("æç¤º "),tr("è¿›çº¸å¤±è´¥ï¼Œè¯·æ‰“å¼€æœºç›–é‡æ–°æ•´ç†æ–‡ç¨¿ã€‚ "));
         str = "Feeding failed. ERRCODE="+QString::number(err_code)+" .";
         writeLog(str);
         break;
     case PAPER_JAM:
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("¿¨Ö½£¬Çë´ò¿ª»ú¸ÇÇåÀíÎÄ¸å¡£ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("å¡çº¸ï¼Œè¯·æ‰“å¼€æœºç›–æ¸…ç†æ–‡ç¨¿ã€‚ "));
         str = "Paper jammed,scan stopped. ERRCODE="+QString::number(err_code)+" .";
         writeLog(str);
         break;
     case DETECT_DOUBLE_FEED:
-        QMessageBox::information(this,QStringLiteral("ÌáÊ¾ "),QStringLiteral("¼ì²âµ½Ë«ÕÅ½øÖ½£¬ÇëÈ¡×ßË«ÕÅÎÄ¸å¡£ "));
+        QMessageBox::information(this,tr("æç¤º "),tr("æ£€æµ‹åˆ°åŒå¼ è¿›çº¸ï¼Œè¯·å–èµ°åŒå¼ æ–‡ç¨¿ã€‚ "));
         str = "Double feeding,scan stopped. ERRCODE="+QString::number(err_code)+" .";
         writeLog(str);
         break;
     case DETECT_STAPLE:
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("¼ì²âµ½¶©Êé¶¤£¬Çë´ò¿ª»ú¸ÇÇåÀíÎÄ¸å¡£ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("æ£€æµ‹åˆ°è®¢ä¹¦é’‰ï¼Œè¯·æ‰“å¼€æœºç›–æ¸…ç†æ–‡ç¨¿ã€‚ "));
         str = "Detected staple,scan stopped. ERRCODE="+QString::number(err_code)+" .";
         writeLog(str);
         break;
     case PAPER_SKEW:
-        QMessageBox::information(this,QStringLiteral("ÌáÊ¾ "),QStringLiteral("¼ì²âµ½½øÖ½ÍáĞ±£¬ÇëÖØĞÂÕûÀíÎÄ¸å¡£ "));
+        QMessageBox::information(this,tr("æç¤º "),tr("æ£€æµ‹åˆ°è¿›çº¸æ­ªæ–œï¼Œè¯·é‡æ–°æ•´ç†æ–‡ç¨¿ã€‚ "));
         str = "Skewed feeding. ERRCODE="+QString::number(err_code)+" .";
         writeLog(str);
         break;
     case FPGA_ERROR:
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("·¢Éú¹Ì¼ş´íÎó£¬É¨ÃèÖĞÖ¹¡£ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("å‘ç”Ÿå›ºä»¶é”™è¯¯ï¼Œæ‰«æä¸­æ­¢ã€‚ "));
         str = "Firmware error(FPGA),scan stopped. ERRCODE="+QString::number(err_code)+" .";
         writeLog(str);
         break;
     case PC_SCAN_BUSY_or_ERROR:
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("¼ÆËã»ú·±Ã¦»ò·¢Éú´íÎó¡£ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("è®¡ç®—æœºç¹å¿™æˆ–å‘ç”Ÿé”™è¯¯ã€‚ "));
         str = "Host busy or error,scan stopped. ERRCODE="+QString::number(err_code)+" .";
         writeLog(str);
         break;
@@ -903,8 +904,8 @@ void MainWindow::on_imgListRClick_rotateAntiClock()
 void MainWindow::on_imgListRClick_multiExport()
 {
     QMessageBox messbox;
-    messbox.setWindowTitle(QStringLiteral("Ñ¯ÎÊ "));
-    messbox.setText("Ñ¡ÔñÒª±£´æµÄÎÄ¼ş¸ñÊ½ ");
+    messbox.setWindowTitle(tr("è¯¢é—® "));
+    messbox.setText("é€‰æ‹©è¦ä¿å­˜çš„æ–‡ä»¶æ ¼å¼ ");
     QAbstractButton* pdfBtn = messbox.addButton("PDF",QMessageBox::ActionRole);
     QAbstractButton* tifBtn = messbox.addButton("TIFF",QMessageBox::ActionRole);
     QAbstractButton* ofdBtn = messbox.addButton("OFD",QMessageBox::ActionRole);
@@ -939,10 +940,10 @@ void MainWindow::on_preScanList(QStringList preTmpList, QList<cv::Mat> preMatLis
 //        else if(settingsPara->ScanCount == 1)
 //        {
 //            m_thread->setThreadPara(m_scanner,dirpath,format,tmpdir,ocrPDF,settingsPara->ImageProcessParam.DestResulution,settingsPara->paperSize);
-//            //ÅĞ¶ÏjpgÑ¹Ëõ±ÈÀıºÍocrÊÇ·ñ¿ªÆô
+//            //åˆ¤æ–­jpgå‹ç¼©æ¯”ä¾‹å’Œocræ˜¯å¦å¼€å¯
 //            if(localPara->isOcrPDF || localPara->jpgQuality.isSetQuality)
 //                m_thread->setThreadOptPara(localPara->isOcrPDF,localPara->jpgQuality.Quality);
-//            //ÅĞ¶ÏÊÇ·ñ´æÔÚÔ¤ÀÀÉ¨ÃèÍ¼ÏñÁĞ±í
+//            //åˆ¤æ–­æ˜¯å¦å­˜åœ¨é¢„è§ˆæ‰«æå›¾åƒåˆ—è¡¨
 //            if(!prescan_matList.isEmpty())
 //            {
 //                if(dirpath != tmpdir.path())
@@ -1008,8 +1009,8 @@ void MainWindow::checkRollerScanNum()
 //    if(num > 450000)
 //    {
 //        QMessageBox::warning(this,
-//                             QStringLiteral("ºÄ²Ä¸ü»»ÌáÊ¾ "),
-//                             QStringLiteral("É¨ÃèÒÇºÄ²ÄÒÑ´ïµ½¸ü»»Öµ( ") + QString::number(num) + QStringLiteral(")/450000)£¬Çë¼°Ê±¸ü»»ºÄ²Ä¡£\n""(¼ÌĞøÊ¹ÓÃÉ¨ÃèÒÇ¿ÉÄÜ³öÏÖ½øÖ½²»Ë³³©£¬¿¨Ö½£¬Ë«ÕÅµÈÎÊÌâ)"));
+//                             tr("è€—ææ›´æ¢æç¤º "),
+//                             tr("æ‰«æä»ªè€—æå·²è¾¾åˆ°æ›´æ¢å€¼( ") + QString::number(num) + tr(")/450000)ï¼Œè¯·åŠæ—¶æ›´æ¢è€—æã€‚\n""(ç»§ç»­ä½¿ç”¨æ‰«æä»ªå¯èƒ½å‡ºç°è¿›çº¸ä¸é¡ºç•…ï¼Œå¡çº¸ï¼ŒåŒå¼ ç­‰é—®é¢˜)"));
 //    }
 }
 void MainWindow::sendCallbackErr(int err)
@@ -1022,11 +1023,11 @@ void MainWindow::checkUsbConnection()
     {
         if(f_connection)
         {
-            ui->lab_scanCnet->setText(QStringLiteral("Î´Á¬½Ó "));
-            ui->lab_scanStatus->setText(QStringLiteral("--"));
+            ui->lab_scanCnet->setText(tr("æœªè¿æ¥ "));
+            ui->lab_scanStatus->setText(tr("--"));
             QMessageBox::warning(this,
-                                 QStringLiteral("Á¬½ÓÖĞ¶Ï "),
-                                 QStringLiteral("É¨ÃèÒÇÁ¬½ÓÖĞ¶Ï¡£ "));
+                                 tr("è¿æ¥ä¸­æ–­ "),
+                                 tr("æ‰«æä»ªè¿æ¥ä¸­æ–­ã€‚ "));
             while(m_thread->isRunning())
             {
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -1039,8 +1040,8 @@ void MainWindow::checkUsbConnection()
         else
         {
             m_scanner->open();
-            ui->lab_scanCnet->setText(QStringLiteral("ÒÑÁ¬½Ó "));
-            ui->lab_scanStatus->setText(QStringLiteral("¿ÕÏĞ "));
+            ui->lab_scanCnet->setText(tr("å·²è¿æ¥ "));
+            ui->lab_scanStatus->setText(tr("ç©ºé—² "));
             qDebug()<<"device usb connected.";
             writeLog("device usb connected.");
             scanEnable(true);
@@ -1053,7 +1054,7 @@ void MainWindow::checkUsbConnection()
 void MainWindow::on_act_open_triggered()
 {
     QStringList fileNames = QFileDialog::getOpenFileNames(nullptr,
-                                                      QStringLiteral("´ò¿ªÍ¼Æ¬ "),
+                                                      tr("æ‰“å¼€å›¾ç‰‡ "),
                                                       "",
                                                       "(*.jpg *.jpeg *.png *.bmp)");
     ui->listWidget->cancelCurSelItemsState();
@@ -1082,7 +1083,7 @@ void MainWindow::on_act_save_triggered()
         else
         {
             globalImg->save(globalImgPath);
-            QMessageBox::information(this,QStringLiteral("ĞÅÏ¢ "),QStringLiteral("Í¼Ïñ±£´æÍê±Ï¡£ "));
+            QMessageBox::information(this,tr("ä¿¡æ¯ "),tr("å›¾åƒä¿å­˜å®Œæ¯•ã€‚ "));
         }
     }
 }
@@ -1097,10 +1098,10 @@ void MainWindow::on_act_export_multiPdf_triggered()
     QList<int> filesDPI = ui->listWidget->getCurSelectedImageDPI();
     if(filesList.isEmpty() || filesSize.isEmpty() || filesDPI.isEmpty())
     {
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("Ñ¡È¡Í¼ÏñÊ§°Ü£¬ÇëÖØÊÔ£¡ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("é€‰å–å›¾åƒå¤±è´¥ï¼Œè¯·é‡è¯•ï¼ "));
         return;
     }
-    QString dst = QFileDialog::getSaveFileName(nullptr,QStringLiteral("µ¼³ö¶àÒ³pdfÎÄµµ "),"","(*.pdf)") + ".pdf";
+    QString dst = QFileDialog::getSaveFileName(nullptr,tr("å¯¼å‡ºå¤šé¡µpdfæ–‡æ¡£ "),"","(*.pdf)") + ".pdf";
     FileExport pdf;
     if(filesList.size()==1)
         pdf.toPDF(filesList.at(0),filesDPI.at(0),filesSize.at(0).width(),filesSize.at(0).height(),dst);
@@ -1112,10 +1113,10 @@ void MainWindow::on_act_export_multiTif_triggered()
     QStringList filesList = ui->listWidget->getSelectedImages();
     if(filesList.isEmpty())
     {
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("Ñ¡È¡Í¼ÏñÊ§°Ü£¬ÇëÖØÊÔ£¡ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("é€‰å–å›¾åƒå¤±è´¥ï¼Œè¯·é‡è¯•ï¼ "));
         return;
     }
-    QString dst = QFileDialog::getSaveFileName(nullptr,QStringLiteral("µ¼³ö¶àÒ³tifÎÄµµ "),"","(*.tif)") + ".tif";
+    QString dst = QFileDialog::getSaveFileName(nullptr,tr("å¯¼å‡ºå¤šé¡µtifæ–‡æ¡£ "),"","(*.tif)") + ".tif";
     FileExport tif;
     if(filesList.size()==1)
         tif.toTIFF(filesList.at(0),dst);
@@ -1127,10 +1128,10 @@ void MainWindow::on_act_export_multiOfd_triggered()
     QStringList filesList = ui->listWidget->getSelectedImages();
     if(filesList.isEmpty())
     {
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("Ñ¡È¡Í¼ÏñÊ§°Ü£¬ÇëÖØÊÔ£¡ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("é€‰å–å›¾åƒå¤±è´¥ï¼Œè¯·é‡è¯•ï¼ "));
         return;
     }
-    QString dst = QFileDialog::getSaveFileName(nullptr,QStringLiteral("µ¼³ö¶àÒ³ofdÎÄµµ "),"","(*.ofd)") + ".ofd";
+    QString dst = QFileDialog::getSaveFileName(nullptr,tr("å¯¼å‡ºå¤šé¡µofdæ–‡æ¡£ "),"","(*.ofd)") + ".ofd";
     FileExport ofd;
     if(filesList.size()==1)
         ofd.toOFD(filesList.at(0),dst);
@@ -1162,7 +1163,7 @@ void MainWindow::on_act_scanLot_triggered()
 //    int scanNum = settingsPara->ScanCount;
 //    checkRollerScanNum();
 //    scanLotsDialog d(nullptr);
-//    d.setWindowTitle(QStringLiteral("Ñ¡ÔñÅú´ÎÎÄ¼ş±£´æµÄÎÄ¼ş¼Ğ "));
+//    d.setWindowTitle(tr("é€‰æ‹©æ‰¹æ¬¡æ–‡ä»¶ä¿å­˜çš„æ–‡ä»¶å¤¹ "));
 //    d.exec();
 //    if (!d.result())return;
 //    QString dirPath = d.directory().absolutePath();
@@ -1380,7 +1381,7 @@ void MainWindow::on_act_adminLogin_triggered()
 }
 void MainWindow::on_act_logOutput_triggered()
 {
-    QFileDialog logOutputDialog(nullptr,QStringLiteral("µ¼³öÈÕÖ¾ÎÄµµ.. "),".","(*.txt)");
+    QFileDialog logOutputDialog(nullptr,tr("å¯¼å‡ºæ—¥å¿—æ–‡æ¡£.. "),".","(*.txt)");
     logOutputDialog.setAcceptMode(QFileDialog::AcceptSave);
     QString filter,filename;
     if(logOutputDialog.exec())
@@ -1413,10 +1414,10 @@ void MainWindow::on_act_logClr_triggered()
         QByteArray str = contents.toUtf8();
         log.write(str);
         log.close();
-        QMessageBox::information(this,QStringLiteral("ĞÅÏ¢ "),QStringLiteral("ÈÕÖ¾Çå¿ÕÍê±Ï¡£ "));
+        QMessageBox::information(this,tr("ä¿¡æ¯ "),tr("æ—¥å¿—æ¸…ç©ºå®Œæ¯•ã€‚ "));
     }
     else
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("ÈÕÖ¾Çå¿ÕÊ§°Ü£¬ÇëÖØÊÔ£¡ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("æ—¥å¿—æ¸…ç©ºå¤±è´¥ï¼Œè¯·é‡è¯•ï¼ "));
 }
 void MainWindow::on_act_setSleepTime_triggered()
 {
@@ -1426,13 +1427,13 @@ void MainWindow::on_act_setSleepTime_triggered()
 void MainWindow::on_act_cacheClr_triggered()
 {
     int a = QMessageBox::question(this,
-                          QStringLiteral("¾¯¸æ "),
-                          QStringLiteral("Çå¿Õ»º´æ½«¹Ø±ÕËùÓĞ·Ç±¾µØ¼ÓÔØµÄÍ¼Ïñ£¬Î´±£´æµÄÍ¼Ïñ½«»á¶ªÊ§£¡\n""ÊÇ·ñ¼ÌĞøÇå¿Õ»º´æ£¿ "),
+                          tr("è­¦å‘Š "),
+                          tr("æ¸…ç©ºç¼“å­˜å°†å…³é—­æ‰€æœ‰éæœ¬åœ°åŠ è½½çš„å›¾åƒï¼Œæœªä¿å­˜çš„å›¾åƒå°†ä¼šä¸¢å¤±ï¼\n""æ˜¯å¦ç»§ç»­æ¸…ç©ºç¼“å­˜ï¼Ÿ "),
                           QMessageBox::Yes|QMessageBox::No,
                           QMessageBox::No);
     if(a == QMessageBox::Yes)
     {
-        //¼ì²éimglistÖĞ·Ç±¾µØÍ¼Ïñ²¢¹Ø±Õ
+        //æ£€æŸ¥imglistä¸­éæœ¬åœ°å›¾åƒå¹¶å…³é—­
         QStringList all_list = ui->listWidget->getImgNamesList();
         QList<int> index_list;
         for(int i  = 0; i < all_list.size(); i++)
@@ -1452,26 +1453,28 @@ void MainWindow::on_act_cacheClr_triggered()
             ui->listWidget->deleteItems(index_list);
             imageInfoList = ui->listWidget->updateImageInfoList();
         }
-        //Çå¿ÕÏµÍ³tmpÏÂµÄ»º´æÍ¼Ïñ
-        tmpdir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot); //ÉèÖÃ¹ıÂË
-        QFileInfoList fileList = tmpdir.entryInfoList(); // »ñÈ¡ËùÓĞµÄÎÄ¼şĞÅÏ¢
-        foreach (QFileInfo file, fileList)//±éÀúÎÄ¼şĞÅÏ¢
+        //æ¸…ç©ºç³»ç»Ÿtmpä¸‹çš„ç¼“å­˜å›¾åƒ
+        tmpdir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot); //è®¾ç½®è¿‡æ»¤
+        QFileInfoList fileList = tmpdir.entryInfoList(); // è·å–æ‰€æœ‰çš„æ–‡ä»¶ä¿¡æ¯
+        foreach (QFileInfo file, fileList)//éå†æ–‡ä»¶ä¿¡æ¯
         {
             file.dir().remove(file.fileName());
         }
-        //ÏÂ·¢Ó²¼ş»º´æÇå³ıÖ¸Áî
+        //ä¸‹å‘ç¡¬ä»¶ç¼“å­˜æ¸…é™¤æŒ‡ä»¤
 //        if(m_scanner->clr_cache())
-//            QMessageBox::information(this,QStringLiteral("ĞÅÏ¢ "),QStringLiteral("»º´æÒÑÇå¿Õ£¡ "));
+//            QMessageBox::information(this,tr("ä¿¡æ¯ "),tr("ç¼“å­˜å·²æ¸…ç©ºï¼ "));
 //        else
-//            QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("Ó²¼ş»º´æÇå¿ÕÊ§°Ü£¡ "));
+//            QMessageBox::warning(this,tr("è­¦å‘Š "),tr("ç¡¬ä»¶ç¼“å­˜æ¸…ç©ºå¤±è´¥ï¼ "));
     }
 }
 void MainWindow::on_act_help_triggered()
 {
-    QString file = sysDirPath + appVersion + "/HuaGoScan_App_Help_manual_V1_0.pdf";
-    QDesktopServices::openUrl(QUrl::fromLocalFile(file));
-    if(!QFileInfo(file).exists())
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("ÕÒ²»µ½°ïÖúÎÄµµ£¡ÎÄµµ¿ÉÄÜÒÑ±»É¾³ı»òÖØÃüÃû£¡ "));
+    QString file = sysDirPath + "/HuaGoScan_App_Help_manual_V1_0.pdf";
+    QFileInfo info(file);
+    if(!info.exists())
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("æ‰¾ä¸åˆ°å¸®åŠ©æ–‡æ¡£ï¼æ–‡æ¡£å¯èƒ½å·²è¢«åˆ é™¤æˆ–é‡å‘½åï¼ "));
+    else
+        QDesktopServices::openUrl(QUrl::fromLocalFile(file));
 }
 
 //btn slots (1)

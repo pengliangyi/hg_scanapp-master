@@ -1,4 +1,4 @@
-#include "cutdialog.h"
+﻿#include "cutdialog.h"
 #include "ui_cutdialog.h"
 #include <QDebug>
 #include <QToolTip>

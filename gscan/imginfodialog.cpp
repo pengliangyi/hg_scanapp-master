@@ -1,4 +1,4 @@
-#include "imginfodialog.h"
+﻿#include "imginfodialog.h"
 #include "ui_imginfodialog.h"
 #include <QFileInfo>
 #include <QMessageBox>
@@ -15,7 +15,7 @@ imgInfoDialog::imgInfoDialog(QWidget *parent, QString globalImgPath, QString tmp
     QFileInfo info(m_globalImgPath);
     if(!info.exists())
     {
-        QMessageBox::warning(this,QStringLiteral("警告"),QStringLiteral("文件不存在！"));
+        QMessageBox::warning(this,tr("警告"),tr("文件不存在！"));
         close();
     }
     ui->setupUi(this);
@@ -40,7 +40,7 @@ imgInfoDialog::imgInfoDialog(QWidget *parent, QString globalImgPath, QString tmp
     //根据isTmpFile写入不同图像信息
     if(isTmpFile)
     {
-        ui->lab_imgKind->setText(QStringLiteral("临时文件"));
+        ui->lab_imgKind->setText(tr("临时文件"));
         ui->lab_imgName->setText("--");
         ui->lab_imgFormat->setText("--");
         ui->lab_imgAbPath->setText("--");
@@ -48,7 +48,7 @@ imgInfoDialog::imgInfoDialog(QWidget *parent, QString globalImgPath, QString tmp
     }
     else
     {
-        ui->lab_imgKind->setText(QStringLiteral("本地文件"));
+        ui->lab_imgKind->setText(tr("本地文件"));
         ui->lab_imgName->setText(info.fileName().remove("."+info.suffix()));
         ui->lab_imgFormat->setText(info.suffix());
         ui->lab_imgAbPath->setText(info.absoluteFilePath());

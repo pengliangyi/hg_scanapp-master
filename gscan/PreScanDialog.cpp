@@ -1,4 +1,4 @@
-#include "PreScanDialog.h"
+﻿#include "PreScanDialog.h"
 #include "ui_PreScanDialog.h"
 
 PreScanDialog::PreScanDialog(QWidget *parent) :

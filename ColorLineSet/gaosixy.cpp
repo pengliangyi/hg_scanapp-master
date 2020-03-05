@@ -1,4 +1,4 @@
-#include "gaosixy.h"
+﻿#include "gaosixy.h"
 #include <QDebug>
 #include <stdlib.h>
 #include <math.h>

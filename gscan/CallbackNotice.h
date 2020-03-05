@@ -1,4 +1,4 @@
-#ifndef CALLBACKNOTICE_H
+﻿#ifndef CALLBACKNOTICE_H
 #define CALLBACKNOTICE_H
 
 #include <QObject>

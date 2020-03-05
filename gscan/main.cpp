@@ -1,7 +1,8 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include <QApplication>
 #include <QSharedMemory>
 #include <QMessageBox>
+
 
 int main(int argc, char *argv[])
 {
@@ -10,7 +11,7 @@ int main(int argc, char *argv[])
     bool bIsRunning = sm.attach();
     if(bIsRunning)
     {
-        QMessageBox::warning(nullptr,QStringLiteral("警告 "),QStringLiteral("程序已在运行！ " ));
+        QMessageBox::warning(nullptr,QObject::tr("warning"),QObject::tr("Application already run!" ));
         return 0;
     }
     else

@@ -1,4 +1,4 @@
-#ifndef CHOSENPAGEDIALOG_H
+﻿#ifndef CHOSENPAGEDIALOG_H
 #define CHOSENPAGEDIALOG_H
 
 #include <QDialog>

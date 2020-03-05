@@ -1,4 +1,4 @@
-#include "fullscreenform.h"
+ï»¿#include "fullscreenform.h"
 #include "ui_fullscreenform.h"
 #include "mainwindow.h"
 #include <QDesktopWidget>
@@ -62,7 +62,7 @@ void fullScreenForm::wheelEvent(QWheelEvent *event)
 //func (4)
 void fullScreenForm::initWindow()
 {
-    //ÉèÖÃsrc»­²¼´óĞ¡ºÍ°´Å¥Î»ÖÃ   
+    //è®¾ç½®srcç”»å¸ƒå¤§å°å’ŒæŒ‰é’®ä½ç½®   
 	QDesktopWidget desk;
     QRectF screenRect = desk.screenGeometry();
     ui->graphicsView->setFixedSize(screenRect.width(),screenRect.height());
@@ -92,7 +92,7 @@ void fullScreenForm::setBtnVisible(int index)
         ui->pbtn_prePage->setVisible(true);
         ui->pbtn_nextPage->setVisible(true);
     }
-    setBtnOpacity(0.7);//»Ö¸´°´Å¥Í¸Ã÷¶ÈÎª0.7
+    setBtnOpacity(0.7);//æ¢å¤æŒ‰é’®é€æ˜åº¦ä¸º0.7
 }
 void fullScreenForm::setBtnOpacity(qreal opacity)
 {
@@ -108,7 +108,7 @@ void fullScreenForm::freshImg()
     src_pic->clear();
     srcImg = QImage(namesList.at(index));
     QImage img = srcImg;
-    img = img.scaled(screenRect.size(), Qt::KeepAspectRatio);//½«Í¼ÏñËõ·Åµ½»­²¼´óĞ¡
+    img = img.scaled(screenRect.size(), Qt::KeepAspectRatio);//å°†å›¾åƒç¼©æ”¾åˆ°ç”»å¸ƒå¤§å°
     src_pic->setImage(&srcImg,img.width(),img.height());
     setBtnVisible(index);
 }
@@ -137,16 +137,16 @@ void fullScreenForm::btnFade()
         ui->pbtn_nextPage->setVisible(false);
         return;
     }
-    qreal i = effect1->opacity();//ËùÓĞ°´Å¥Í³Ò»µ­»¯£¬¿ÉÈ¡ÈÎÒâeffectÍ¸Ã÷¶È   
+    qreal i = effect1->opacity();//æ‰€æœ‰æŒ‰é’®ç»Ÿä¸€æ·¡åŒ–ï¼Œå¯å–ä»»æ„effecté€æ˜åº¦   
 	setBtnOpacity(i-0.005);
 }
 
 void fullScreenForm::subWinMouseMoved()
 {
-    setBtnVisible(index);//¸ù¾İµ±Ç°Í¼ÏñindexÏÔÊ¾°´Å¥
-    timer_fade.stop();//ÖĞ¶Ïµ­»¯¼ÆÊ±
-    timer_hide.setSingleShot(true);//ÉèÖÃ°´Å¥ÏÔÊ¾¼ÆÊ±Îªµ¥´Î´¥·¢Ä£Ê½   
-	timer_hide.start(1000);//ÉèÖÃ°´Å¥1Ãëºó¿ªÊ¼µ­»¯
+    setBtnVisible(index);//æ ¹æ®å½“å‰å›¾åƒindexæ˜¾ç¤ºæŒ‰é’®
+    timer_fade.stop();//ä¸­æ–­æ·¡åŒ–è®¡æ—¶
+    timer_hide.setSingleShot(true);//è®¾ç½®æŒ‰é’®æ˜¾ç¤ºè®¡æ—¶ä¸ºå•æ¬¡è§¦å‘æ¨¡å¼   
+	timer_hide.start(1000);//è®¾ç½®æŒ‰é’®1ç§’åå¼€å§‹æ·¡åŒ–
 }
 
 

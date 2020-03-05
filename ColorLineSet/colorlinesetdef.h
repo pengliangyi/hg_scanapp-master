@@ -1,4 +1,4 @@
-#ifndef COLORLINESETDEF_H
+﻿#ifndef COLORLINESETDEF_H
 #define COLORLINESETDEF_H
 #include <qglobal.h>
 #if defined(GCOLORLINESET_LIBRARY)

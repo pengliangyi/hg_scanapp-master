@@ -1,4 +1,4 @@
-#ifndef GAOSIXY_H
+﻿#ifndef GAOSIXY_H
 #define GAOSIXY_H
 
 #include <stdio.h>

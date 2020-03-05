@@ -1,4 +1,4 @@
-#include "./imageList.h"
+ï»¿#include "./imageList.h"
 #include <QFile>
 #include <QImage>
 #include <QDebug>
@@ -334,14 +334,14 @@ void ImageList::contextMenuEvent(QContextMenuEvent *event)
 
 void ImageList::initRightBtnMenu()
 {
-    rotate_s = new QAction(QStringLiteral("Ë³Ê±Õë90¡ã "),this);
-    rotate_n = new QAction(QStringLiteral("ÄæÊ±ÕëĞı×ª90¡ã "),this);
-    first_page = new QAction(QStringLiteral("µÚÒ»Ò³ "),this);
-    last_page = new QAction(QStringLiteral("×îºóÒ»Ò³ "),this);
-    delSelect = new QAction(QStringLiteral("É¾³ı "),this);
-    merge = new QAction(QStringLiteral("ºÏ²¢Îª¶àÒ³ÎÄ¼ş "),this);
-    save_as = new QAction(QStringLiteral("Áí´æÎª... "),this);
-    close = new QAction(QStringLiteral("¹Ø±Õ "),this);
+    rotate_s = new QAction(tr("é¡ºæ—¶é’ˆ90Â° "),this);
+    rotate_n = new QAction(tr("é€†æ—¶é’ˆæ—‹è½¬90Â° "),this);
+    first_page = new QAction(tr("ç¬¬ä¸€é¡µ "),this);
+    last_page = new QAction(tr("æœ€åä¸€é¡µ "),this);
+    delSelect = new QAction(tr("åˆ é™¤ "),this);
+    merge = new QAction(tr("åˆå¹¶ä¸ºå¤šé¡µæ–‡ä»¶ "),this);
+    save_as = new QAction(tr("å¦å­˜ä¸º... "),this);
+    close = new QAction(tr("å…³é—­ "),this);
     m_menu.addAction(rotate_s);
     m_menu.addAction(rotate_n);
     m_menu.addAction(first_page);
@@ -374,8 +374,8 @@ void ImageList::deleteFunction(QList<QListWidgetItem*> items)
 {
     if (items.count() > 0)
     {
-        if (QMessageBox::Yes == QMessageBox::question(nullptr, QStringLiteral("¹Ø±ÕÍ¼Ïñ "),
-            QStringLiteral("¹Ø±Õ%1ÕÅÍ¼Ïñ ").arg(QString::number(items.count())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes))
+        if (QMessageBox::Yes == QMessageBox::question(nullptr, tr("å…³é—­å›¾åƒ "),
+            tr("å…³é—­%1å¼ å›¾åƒ ").arg(QString::number(items.count())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes))
         {
             for(int j = 0; j < items.size(); j++)
             {

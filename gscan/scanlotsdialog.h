@@ -1,4 +1,4 @@
-#ifndef SCANLOTSDIALOG_H
+﻿#ifndef SCANLOTSDIALOG_H
 #define SCANLOTSDIALOG_H
 
 #include <QDialog>

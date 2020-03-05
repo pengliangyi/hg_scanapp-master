@@ -1,4 +1,4 @@
-#ifndef CUTDIALOG_H
+﻿#ifndef CUTDIALOG_H
 #define CUTDIALOG_H
 
 #include <QWidget>

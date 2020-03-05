@@ -1,4 +1,4 @@
-#ifndef FULLSCREENFORM_H
+ï»¿#ifndef FULLSCREENFORM_H
 #define FULLSCREENFORM_H
 
 #include <QDialog>
@@ -27,22 +27,22 @@ protected:
 private slots:
     void on_pbtn_prePage_clicked();
     void on_pbtn_nextPage_clicked();
-    void hideBtn();//Òş²Ø¼ÆÊ±timeoutÏìÓ¦²Û£¬Æô¶¯µ­»¯°´Å¥
-    void btnFade();//µ­»¯¼ÆÊ±timeoutÏìÓ¦²Û£¬Öğ²½µ­»¯°´Å¥
-    void subWinMouseMoved();//ÏìÓ¦graphicsSceneÊó±êÒÆ¶¯ÊÂ¼ş
+    void hideBtn();//éšè—è®¡æ—¶timeoutå“åº”æ§½ï¼Œå¯åŠ¨æ·¡åŒ–æŒ‰é’®
+    void btnFade();//æ·¡åŒ–è®¡æ—¶timeoutå“åº”æ§½ï¼Œé€æ­¥æ·¡åŒ–æŒ‰é’®
+    void subWinMouseMoved();//å“åº”graphicsSceneé¼ æ ‡ç§»åŠ¨äº‹ä»¶
 private:
     Ui::fullScreenForm *ui;
-    MainWindow* mainW;//MainWindowÖ¸Õë
-    QImage srcImg;//À´Ô´Í¼Ïñ¸±±¾
-    MyGraphicsScene *src_pic;//È«ÆÁ»­²¼
-    int index;//µ±Ç°Í¼ÏñÔÚMainWindowÁĞ±íÖĞµÄĞòºÅ
-    QStringList namesList;//MainWindowÁĞ±íÖĞËùÓĞÍ¼ÏñµÄÎÄ¼şÂ·¾¶
-    QTimer timer_hide,timer_fade;//°´Å¥Òş²Ø¼ÆÊ±Æ÷£¬°´Å¥µ­»¯¼ÆÊ±Æ÷   
-	QGraphicsOpacityEffect *effect1,*effect2;//°´Å¥¶ÔÓ¦µÄµ­»¯Ğ§¹û   
-	void setBtnVisible(int index);//¸ù¾İµ±Ç°Í¼ÏñĞòºÅË¢ĞÂ°´Å¥¿É¼ûÇé¿ö
-    void setBtnOpacity(qreal opacity);//ÉèÖÃ°´Å¥Í¸Ã÷¶È   
-	void freshImg();//Ë¢ĞÂ»­²¼Í¼Ïñ
-    void initWindow();//³õÊ¼»¯È«ÆÁ´°¿Ú
+    MainWindow* mainW;//MainWindowæŒ‡é’ˆ
+    QImage srcImg;//æ¥æºå›¾åƒå‰¯æœ¬
+    MyGraphicsScene *src_pic;//å…¨å±ç”»å¸ƒ
+    int index;//å½“å‰å›¾åƒåœ¨MainWindowåˆ—è¡¨ä¸­çš„åºå·
+    QStringList namesList;//MainWindowåˆ—è¡¨ä¸­æ‰€æœ‰å›¾åƒçš„æ–‡ä»¶è·¯å¾„
+    QTimer timer_hide,timer_fade;//æŒ‰é’®éšè—è®¡æ—¶å™¨ï¼ŒæŒ‰é’®æ·¡åŒ–è®¡æ—¶å™¨   
+	QGraphicsOpacityEffect *effect1,*effect2;//æŒ‰é’®å¯¹åº”çš„æ·¡åŒ–æ•ˆæœ   
+	void setBtnVisible(int index);//æ ¹æ®å½“å‰å›¾åƒåºå·åˆ·æ–°æŒ‰é’®å¯è§æƒ…å†µ
+    void setBtnOpacity(qreal opacity);//è®¾ç½®æŒ‰é’®é€æ˜åº¦   
+	void freshImg();//åˆ·æ–°ç”»å¸ƒå›¾åƒ
+    void initWindow();//åˆå§‹åŒ–å…¨å±çª—å£
 };
 
 #endif // FULLSCREENFORM_H

@@ -1,4 +1,4 @@
-#ifndef IMGINFODIALOG_H
+﻿#ifndef IMGINFODIALOG_H
 #define IMGINFODIALOG_H
 
 #include <QDialog>

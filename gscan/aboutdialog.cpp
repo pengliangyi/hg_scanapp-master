@@ -1,4 +1,4 @@
-#include "aboutdialog.h"
+﻿#include "aboutdialog.h"
 #include "ui_aboutdialog.h"
 
 AboutDialog::AboutDialog(QString version, QWidget *parent) :

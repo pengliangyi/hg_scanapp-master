@@ -1,4 +1,4 @@
-#include "scansettingsdialog.h"
+ï»¿#include "scansettingsdialog.h"
 #include "ui_scansettingsdialog.h"
 //#include "curvedialog.h"
 //#include "scanareadialog.h"
@@ -12,7 +12,6 @@
 #include <QInputDialog>
 #include <QFileDialog>
 #include <QFileInfo>
-#include <QSettings>
 #include <QDir>
 #include <QDebug>
 
@@ -35,6 +34,7 @@ scanSettingsDialog::scanSettingsDialog(QWidget *parent) :
     m_sysDirPath = dynamic_cast<MainWindow*>(parent)->sysDirPath;
     m_appDirPath = dynamic_cast<MainWindow*>(parent)->appDirPath;
     m_iniDirPath = m_appDirPath+"/settings";
+    app_ini = new QSettings(m_appDirPath+"/GSCAN_paraConfig.ini",QSettings::IniFormat);
     QDir dir;
     dir.mkdir(m_iniDirPath);
     load_iniList();
@@ -42,8 +42,9 @@ scanSettingsDialog::scanSettingsDialog(QWidget *parent) :
 
 scanSettingsDialog::~scanSettingsDialog()
 {
-    delete ui;
     save_iniList();
+    delete ui;
+    delete app_ini;
 }
 
 //my Functions (6)
@@ -70,70 +71,70 @@ void scanSettingsDialog::set_globalLogic()
 }
 void scanSettingsDialog::set_defaults()
 {
-    ui->cbox_colorMode->setCurrentIndex(0);//»ù±¾£ºÉ«²ÊÄ£Ê½£º24Î»²ÊÉ«    
-	ui->cbtn_multiStream->setCheckState(Qt::Unchecked);//»ù±¾£º¶àÁ÷Êä³ö£º²»¹´Ñ¡    
-	ui->cbox_multiStream->setCurrentIndex(0);//»ù±¾£º¶àÁ÷Êä³ö£º²ÊÉ«+»Ò¶È+ºÚ°×
+    ui->cbox_colorMode->setCurrentIndex(0);//åŸºæœ¬ï¼šè‰²å½©æ¨¡å¼ï¼š24ä½å½©è‰²    
+	ui->cbtn_multiStream->setCheckState(Qt::Unchecked);//åŸºæœ¬ï¼šå¤šæµè¾“å‡ºï¼šä¸å‹¾é€‰    
+	ui->cbox_multiStream->setCurrentIndex(0);//åŸºæœ¬ï¼šå¤šæµè¾“å‡ºï¼šå½©è‰²+ç°åº¦+é»‘ç™½
     ui->cbox_multiStream->setEnabled(false);
-    ui->cbox_paperSize->setCurrentIndex(1);//»ù±¾£ºÖ½ÕÅ³ß´ç£ºA3
-    ui->cbtn_sizeAreaSwitch->setChecked(false);//»ù±¾£º×Ô¶¨ÒåÇøÓò£º²»¹´Ñ¡    
+    ui->cbox_paperSize->setCurrentIndex(1);//åŸºæœ¬ï¼šçº¸å¼ å°ºå¯¸ï¼šA3
+    ui->cbtn_sizeAreaSwitch->setChecked(false);//åŸºæœ¬ï¼šè‡ªå®šä¹‰åŒºåŸŸï¼šä¸å‹¾é€‰    
 	ui->tbtn_sizeArea->setEnabled(false);
-    ui->cbox_resolution->setCurrentIndex(2);//»ù±¾£º·Ö±æÂÊDPI£º200
-    ui->cbox_scanPage->setCurrentIndex(1);//»ù±¾£ºÉ¨ÃèÃæ£ºË«Ãæ
-    ui->Slider_brightness->setValue(128);//ÁÁ¶È£º128
+    ui->cbox_resolution->setCurrentIndex(2);//åŸºæœ¬ï¼šåˆ†è¾¨ç‡DPIï¼š200
+    ui->cbox_scanPage->setCurrentIndex(1);//åŸºæœ¬ï¼šæ‰«æé¢ï¼šåŒé¢
+    ui->Slider_brightness->setValue(128);//äº®åº¦ï¼š128
     ui->spin_brightness->setValue(128);
-    ui->Slider_contrast->setValue(4);//¶Ô±È¶È£º4
+    ui->Slider_contrast->setValue(4);//å¯¹æ¯”åº¦ï¼š4
     ui->spin_contrast->setValue(4);
-    ui->Slider_gamma->setValue(10);//Ù¤ÂíÖµ£º1.0
+    ui->Slider_gamma->setValue(10);//ä¼½é©¬å€¼ï¼š1.0
     ui->dSpin_gamma->setValue(1.0);
-    ui->cbtn_colorLineSwitch->setChecked(false);//É«µ÷ÇúÏß£º²»¹´Ñ¡    
+    ui->cbtn_colorLineSwitch->setChecked(false);//è‰²è°ƒæ›²çº¿ï¼šä¸å‹¾é€‰    
 	ui->tbtn_colorCurve->setEnabled(false);
 
-    ui->cbtn_deBlack->setCheckState(Qt::Unchecked);//»ù±¾Í¼Ïñ´¦Àí£ºÏû³ıºÚ¿ò£º²»¹´Ñ¡    
-	ui->cbtn_adjust->setCheckState(Qt::Unchecked);//»ù±¾Í¼Ïñ´¦Àí£º×Ô¶¯¾ÀÆ«£º²»¹´Ñ¡    
-	ui->cbtn_deMoire->setCheckState(Qt::Unchecked);//»ù±¾Í¼Ïñ´¦Àí£ºÈ¥³ıÄ¦¶ûÎÆ£º²»¹´Ñ¡    
-	ui->cbtn_antiInfi->setCheckState(Qt::Unchecked);//»ù±¾Í¼Ïñ´¦Àí£º·ÀÖ¹ÉøÍ¸£º²»¹´Ñ¡    
-	ui->cbtn_deHole->setCheckState(Qt::Unchecked);//»ù±¾Í¼Ïñ´¦Àí£º´©¿×ÒÆ³ı£º²»¹´Ñ¡    
+    ui->cbtn_deBlack->setCheckState(Qt::Unchecked);//åŸºæœ¬å›¾åƒå¤„ç†ï¼šæ¶ˆé™¤é»‘æ¡†ï¼šä¸å‹¾é€‰    
+	ui->cbtn_adjust->setCheckState(Qt::Unchecked);//åŸºæœ¬å›¾åƒå¤„ç†ï¼šè‡ªåŠ¨çº åï¼šä¸å‹¾é€‰    
+	ui->cbtn_deMoire->setCheckState(Qt::Unchecked);//åŸºæœ¬å›¾åƒå¤„ç†ï¼šå»é™¤æ‘©å°”çº¹ï¼šä¸å‹¾é€‰    
+	ui->cbtn_antiInfi->setCheckState(Qt::Unchecked);//åŸºæœ¬å›¾åƒå¤„ç†ï¼šé˜²æ­¢æ¸—é€ï¼šä¸å‹¾é€‰    
+	ui->cbtn_deHole->setCheckState(Qt::Unchecked);//åŸºæœ¬å›¾åƒå¤„ç†ï¼šç©¿å­”ç§»é™¤ï¼šä¸å‹¾é€‰    
 	ui->label_deHole->setEnabled(false);
     ui->Slider_deHole->setValue(1);
     ui->Slider_deHole->setEnabled(false);
     ui->label_deHolePara->setText("10%");
     ui->label_deHolePara->setEnabled(false);
-    ui->cbox_deColor->setCurrentIndex(0);//ÂË¾µ£º³ıÉ«£º²»³ıÉ«    
+    ui->cbox_deColor->setCurrentIndex(0);//æ»¤é•œï¼šé™¤è‰²ï¼šä¸é™¤è‰²    
 	ui->label_deColor->setEnabled(false);
     ui->cbox_deColor->setEnabled(false);
-    ui->cbtn_setBWDot->setCheckState(Qt::Unchecked);//ÂË¾µ£º´íÎóÀ©É¢£º²»¹´Ñ¡    
+    ui->cbtn_setBWDot->setCheckState(Qt::Unchecked);//æ»¤é•œï¼šé”™è¯¯æ‰©æ•£ï¼šä¸å‹¾é€‰    
 	ui->cbtn_setBWDot->setEnabled(false);
-    ui->cbtn_colorAdjust->setCheckState(Qt::Unchecked);//ÂË¾µ£ºÉ«²ÊĞŞÕı£º²»¹´Ñ¡    
-	ui->cbtn_noise->setCheckState(Qt::Unchecked);//ÂË¾µ£ºÔëµãÓÅ»¯£º²»¹´Ñ¡    
+    ui->cbtn_colorAdjust->setCheckState(Qt::Unchecked);//æ»¤é•œï¼šè‰²å½©ä¿®æ­£ï¼šä¸å‹¾é€‰    
+	ui->cbtn_noise->setCheckState(Qt::Unchecked);//æ»¤é•œï¼šå™ªç‚¹ä¼˜åŒ–ï¼šä¸å‹¾é€‰    
 	ui->cbtn_noise->setEnabled(false);
-    ui->cbtn_texRmv->setCheckState(Qt::Unchecked);//ÂË¾µ£ºÈ¥ÍøÎÆ£º²»¹´Ñ¡
-    ui->gbox_sharAndBlur->setChecked(false);//ÂË¾µ£ºÈñ»¯ÓëÄ£ºı£º²»¹´Ñ¡    
-	ui->rbtn_sharpening1->setChecked(true);//ÂË¾µ£ºÈñ»¯ÓëÄ£ºı£ºÈñ»¯£ºÑ¡ÖĞ
+    ui->cbtn_texRmv->setCheckState(Qt::Unchecked);//æ»¤é•œï¼šå»ç½‘çº¹ï¼šä¸å‹¾é€‰
+    ui->gbox_sharAndBlur->setChecked(false);//æ»¤é•œï¼šé”åŒ–ä¸æ¨¡ç³Šï¼šä¸å‹¾é€‰    
+	ui->rbtn_sharpening1->setChecked(true);//æ»¤é•œï¼šé”åŒ–ä¸æ¨¡ç³Šï¼šé”åŒ–ï¼šé€‰ä¸­
     ui->gbox_sharAndBlur->setEnabled(true);
-    ui->cbtn_specialMulti->setCheckState(Qt::Unchecked);//ÌØÊâÍ¼Ïñ´¦Àí£º¶àÁ÷Êä³ö£º²»¹´Ñ¡    
-	ui->cbtn_deRed_asheet->setCheckState(Qt::Unchecked);//ÌØÊâÍ¼Ïñ´¦Àí£º´ğÌâ¿¨³ıºì£º²»¹´Ñ¡
-    ui->rbtn_maxPage->setChecked(true);//ËÍÖ½£ºÁ¬ĞøÉ¨Ãè£ºÑ¡ÖĞ
-    ui->rbtn_pageNum->setChecked(false);//ËÍÖ½£ºÖ¸¶¨ÕÅÊı£º²»Ñ¡ÖĞ
+    ui->cbtn_specialMulti->setCheckState(Qt::Unchecked);//ç‰¹æ®Šå›¾åƒå¤„ç†ï¼šå¤šæµè¾“å‡ºï¼šä¸å‹¾é€‰    
+	ui->cbtn_deRed_asheet->setCheckState(Qt::Unchecked);//ç‰¹æ®Šå›¾åƒå¤„ç†ï¼šç­”é¢˜å¡é™¤çº¢ï¼šä¸å‹¾é€‰
+    ui->rbtn_maxPage->setChecked(true);//é€çº¸ï¼šè¿ç»­æ‰«æï¼šé€‰ä¸­
+    ui->rbtn_pageNum->setChecked(false);//é€çº¸ï¼šæŒ‡å®šå¼ æ•°ï¼šä¸é€‰ä¸­
     ui->spin_pageNum->setValue(1);
     ui->spin_pageNum->setEnabled(false);
-    ui->cbtn_doubleCheck->setCheckState(Qt::Checked);//ËÍÖ½£ºË«ÕÅ¼ì²â£º¹´Ñ¡    
-	ui->cbtn_skewCheck->setCheckState(Qt::Unchecked);//ËÍÖ½£ºÍáĞ±¼ì²â£º²»¹´Ñ¡    
+    ui->cbtn_doubleCheck->setCheckState(Qt::Checked);//é€çº¸ï¼šåŒå¼ æ£€æµ‹ï¼šå‹¾é€‰    
+	ui->cbtn_skewCheck->setCheckState(Qt::Unchecked);//é€çº¸ï¼šæ­ªæ–œæ£€æµ‹ï¼šä¸å‹¾é€‰    
 	ui->Slider_skewCheck->setValue(3);
     ui->Slider_skewCheck->setEnabled(false);
-    ui->label_skewCheck->setText(QStringLiteral("ÊÊÖĞ"));
+    ui->label_skewCheck->setText(tr("é€‚ä¸­"));
     ui->label_skewCheck->setEnabled(false);
-    ui->cbtn_stapleCheck->setCheckState(Qt::Unchecked);//ËÍÖ½£º¶©Êé¶¤¼ì²â£º²»¹´Ñ¡    
-	ui->cbox_pageDirection->setCurrentIndex(0);//ËÍÖ½£ºÎÄ¸å·½Ïò£º²»Ğı×ª    
-	ui->cbtn_backRotate_180->setCheckState(Qt::Unchecked);//ËÍÖ½£º±³ÃæĞı×ª180¡ã£º²»¹´Ñ¡
-    ui->cbtn_imgSplit->setCheckState(Qt::Unchecked);//ÆäËû£ºÍ¼Ïñ²ğ·Ö£º²»¹´Ñ¡    
-	ui->cbtn_jpgPercent->setCheckState(Qt::Unchecked);//ÆäËû£ºJPGÑ¹Ëõ±È£º²»¹´Ñ¡    
-	ui->Slider_jpgPercent->setValue(10);//ÆäËû£ºJPGÑ¹Ëõ±È£º100%
+    ui->cbtn_stapleCheck->setCheckState(Qt::Unchecked);//é€çº¸ï¼šè®¢ä¹¦é’‰æ£€æµ‹ï¼šä¸å‹¾é€‰    
+	ui->cbox_pageDirection->setCurrentIndex(0);//é€çº¸ï¼šæ–‡ç¨¿æ–¹å‘ï¼šä¸æ—‹è½¬    
+	ui->cbtn_backRotate_180->setCheckState(Qt::Unchecked);//é€çº¸ï¼šèƒŒé¢æ—‹è½¬180Â°ï¼šä¸å‹¾é€‰
+    ui->cbtn_imgSplit->setCheckState(Qt::Unchecked);//å…¶ä»–ï¼šå›¾åƒæ‹†åˆ†ï¼šä¸å‹¾é€‰    
+	ui->cbtn_jpgPercent->setCheckState(Qt::Unchecked);//å…¶ä»–ï¼šJPGå‹ç¼©æ¯”ï¼šä¸å‹¾é€‰    
+	ui->Slider_jpgPercent->setValue(10);//å…¶ä»–ï¼šJPGå‹ç¼©æ¯”ï¼š100%
     ui->label_jpgPercentPara->setText("100%");
     ui->label_jpgPercent->setEnabled(false);
     ui->Slider_jpgPercent->setEnabled(false);
     ui->label_jpgPercentPara->setEnabled(false);
-    ui->gbox_ocr->setChecked(false);//ÆäËû£ºË«²ãpdf¹¦ÄÜ£º²»¹´Ñ¡
-	ui->cbtn_preScan->setChecked(false);//ÆäËû£ºÔ¤ÀÀÉ¨Ãè£º²»¹´Ñ¡
+    ui->gbox_ocr->setChecked(false);//å…¶ä»–ï¼šåŒå±‚pdfåŠŸèƒ½ï¼šä¸å‹¾é€‰
+	ui->cbtn_preScan->setChecked(false);//å…¶ä»–ï¼šé¢„è§ˆæ‰«æï¼šä¸å‹¾é€‰
 }
 void scanSettingsDialog::set_funVisible()
 {
@@ -624,8 +625,8 @@ void scanSettingsDialog::on_cbox_paperSize_currentIndexChanged(int index)
     if(ui->cbtn_sizeAreaSwitch->isChecked())
     {
         int m = QMessageBox::question(this,
-                                      QStringLiteral("ÖØÒª"),
-                                      QStringLiteral("µ±Ç°ÎÄ¸å³ß´çÒÑÉèÖÃ×Ô¶¨ÒåÉ¨ÃèÇøÓò¡£Èô¸ü»»ÎÄ¸å³ß´ç£¬½«µ¼ÖÂÒÑÑ¡Ôñ×Ô¶¨ÒåÉ¨ÃèÇøÓòÖØÖÃ¡£\n""ÊÇ·ñÈ·¶¨Òª¸ü»»ÎÄ¸å³ß´ç£¿"));
+                                      tr("é‡è¦"),
+                                      tr("å½“å‰æ–‡ç¨¿å°ºå¯¸å·²è®¾ç½®è‡ªå®šä¹‰æ‰«æåŒºåŸŸã€‚è‹¥æ›´æ¢æ–‡ç¨¿å°ºå¯¸ï¼Œå°†å¯¼è‡´å·²é€‰æ‹©è‡ªå®šä¹‰æ‰«æåŒºåŸŸé‡ç½®ã€‚\n""æ˜¯å¦ç¡®å®šè¦æ›´æ¢æ–‡ç¨¿å°ºå¯¸ï¼Ÿ"));
         if(m == QMessageBox::No)
         {
             ui->cbox_paperSize->setCurrentIndex(m_paperSize);
@@ -893,22 +894,22 @@ void scanSettingsDialog::on_Slider_skewCheck_valueChanged(int value)
     switch(value)
     {
     case 1:
-        sk = QStringLiteral("ºÜÒ×¼ì²â ");
+        sk = tr("å¾ˆæ˜“æ£€æµ‹ ");
         break;
     case 2:
-        sk = QStringLiteral("Ò×¼ì²â ");
+        sk = tr("æ˜“æ£€æµ‹ ");
         break;
     case 3:
-        sk = QStringLiteral("ÊÊÖĞ ");
+        sk = tr("é€‚ä¸­ ");
         break;
     case 4:
-        sk = QStringLiteral("ÄÑ¼ì²â ");
+        sk = tr("éš¾æ£€æµ‹ ");
         break;
     case 5:
-        sk = QStringLiteral("ºÜÄÑ¼ì²â ");
+        sk = tr("å¾ˆéš¾æ£€æµ‹ ");
         break;
     default:
-        sk = QStringLiteral("ÊÊÖĞ ");
+        sk = tr("é€‚ä¸­ ");
     }
     ui->label_skewCheck->setText(sk);
 }
@@ -956,7 +957,7 @@ void scanSettingsDialog::on_pbtn_help_clicked()
 {
     QString file = m_sysDirPath + "/HuaGoScan_scanSettings_Help_manual_V1_0.pdf";
     if(!QFileInfo(file).exists())
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("ÕÒ²»µ½°ïÖúÎÄµµ£¡ÎÄµµ¿ÉÄÜÒÑ±»É¾³ı»òÖØÃüÃû£¡ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("æ‰¾ä¸åˆ°å¸®åŠ©æ–‡æ¡£ï¼æ–‡æ¡£å¯èƒ½å·²è¢«åˆ é™¤æˆ–é‡å‘½åï¼ "));
     QDesktopServices::openUrl(QUrl::fromLocalFile(file));
 }
 void scanSettingsDialog::on_pbtn_default_clicked()
@@ -978,8 +979,8 @@ void scanSettingsDialog::on_pbtn_cancel_clicked()
 void scanSettingsDialog::on_pBtn_usrSetting_app_clicked()
 {
     int a = QMessageBox::question(this,
-                          QStringLiteral("Ñ¯ÎÊ "),
-                          QStringLiteral("Ó¦ÓÃÒÑÑ¡ÖĞµÄÅäÖÃ£¬É¨Ãè²ÎÊı½«·¢Éú¸ü¸Ä£¬ÊÇ·ñ¼ÌĞø£¿ "),
+                          tr("è¯¢é—® "),
+                          tr("åº”ç”¨å·²é€‰ä¸­çš„é…ç½®ï¼Œæ‰«æå‚æ•°å°†å‘ç”Ÿæ›´æ”¹ï¼Œæ˜¯å¦ç»§ç»­ï¼Ÿ "),
                           QMessageBox::Yes|QMessageBox::No,
                           QMessageBox::Yes);
     if(a == QMessageBox::Yes)
@@ -988,7 +989,7 @@ void scanSettingsDialog::on_pBtn_usrSetting_app_clicked()
         QString file_path = m_iniDirPath+"/"+name+".ini";
         QFileInfo ini_file(file_path);
         if(!ini_file.exists())
-            QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("¼ÓÔØÅäÖÃÎÄ¼şÊ§°Ü¡£ÅäÖÃÎÄ¼ş¿ÉÄÜÒÑËğ»µ»ò±»É¾³ı¡£ "));
+            QMessageBox::warning(this,tr("è­¦å‘Š "),tr("åŠ è½½é…ç½®æ–‡ä»¶å¤±è´¥ã€‚é…ç½®æ–‡ä»¶å¯èƒ½å·²æŸåæˆ–è¢«åˆ é™¤ã€‚ "));
         else
             load_ini(name);
     }
@@ -996,18 +997,18 @@ void scanSettingsDialog::on_pBtn_usrSetting_app_clicked()
 void scanSettingsDialog::on_pBtn_usrSetting_add_clicked()
 {
     QInputDialog d(this);
-    d.setWindowTitle(QStringLiteral("ĞÂÔöÅäÖÃ"));
-    d.setLabelText(QStringLiteral("ÊäÈëĞÂÅäÖÃÃû³Æ"));
+    d.setWindowTitle(tr("æ–°å¢é…ç½®"));
+    d.setLabelText(tr("è¾“å…¥æ–°é…ç½®åç§°"));
     if(d.exec())
     {
         QString name = d.textValue();
-        //±£´æÉ¨Ãè²ÎÊıÎªiniÅäÖÃÎÄ¼ş£¬ÎÄ¼şÃûÓëÊäÈëÎÄ¼şÃûÏàÍ¬
+        //ä¿å­˜æ‰«æå‚æ•°ä¸ºinié…ç½®æ–‡ä»¶ï¼Œæ–‡ä»¶åä¸è¾“å…¥æ–‡ä»¶åç›¸åŒ
         if(!add_ini(name, m_iniDirPath))
         {
-            QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("ĞÂÔöÅäÖÃÎÄ¼şÊ§°Ü¡£Çë¼ì²é´ÅÅÌÊ£Óà¿Õ¼ä»òµ±Ç°ÓÃ»§×éÈ¨ÏŞ¡£ "));
+            QMessageBox::warning(this,tr("è­¦å‘Š "),tr("æ–°å¢é…ç½®æ–‡ä»¶å¤±è´¥ã€‚è¯·æ£€æŸ¥ç£ç›˜å‰©ä½™ç©ºé—´æˆ–å½“å‰ç”¨æˆ·ç»„æƒé™ã€‚ "));
             return;
         }
-        //Ôö¼ÓÁĞ±íÏî
+        //å¢åŠ åˆ—è¡¨é¡¹
         add_usrSetting(name);
         if(ui->listWidget->count() >= MAX_SETTINGS_NUM)
         {
@@ -1019,8 +1020,8 @@ void scanSettingsDialog::on_pBtn_usrSetting_add_clicked()
 void scanSettingsDialog::on_pBtn_usrSetting_del_clicked()
 {
     int a = QMessageBox::question(this,
-                          QStringLiteral("Ñ¯ÎÊ "),
-                          QStringLiteral("½«ÓÀ¾ÃÉ¾³ıÒÑÑ¡ÖĞµÄÅäÖÃ£¬ÊÇ·ñ¼ÌĞø£¿ "),
+                          tr("è¯¢é—® "),
+                          tr("å°†æ°¸ä¹…åˆ é™¤å·²é€‰ä¸­çš„é…ç½®ï¼Œæ˜¯å¦ç»§ç»­ï¼Ÿ "),
                           QMessageBox::Yes|QMessageBox::No,
                           QMessageBox::Yes);
     if(a == QMessageBox::Yes)
@@ -1035,8 +1036,8 @@ void scanSettingsDialog::on_pBtn_usrSetting_del_clicked()
 void scanSettingsDialog::on_pBtn_usrSetting_clr_clicked()
 {
     int a = QMessageBox::question(this,
-                          QStringLiteral("Ñ¯ÎÊ "),
-                          QStringLiteral("½«ÓÀ¾ÃÉ¾³ıËùÓĞÒÑ±£´æµÄÅäÖÃ£¬ÊÇ·ñ¼ÌĞø£¿ "),
+                          tr("è¯¢é—® "),
+                          tr("å°†æ°¸ä¹…åˆ é™¤æ‰€æœ‰å·²ä¿å­˜çš„é…ç½®ï¼Œæ˜¯å¦ç»§ç»­ï¼Ÿ "),
                           QMessageBox::Yes|QMessageBox::No,
                           QMessageBox::Yes);
     if(a == QMessageBox::Yes)
@@ -1054,7 +1055,7 @@ void scanSettingsDialog::on_pBtn_usrSetting_clr_clicked()
 void scanSettingsDialog::on_pBtn_usrSetting_inp_clicked()
 {
 //    QString file_path = QFileDialog::getOpenFileName(nullptr,
-//                                                     QStringLiteral("µ¼ÈëÅäÖÃÎÄ¼ş "),
+//                                                     tr("å¯¼å…¥é…ç½®æ–‡ä»¶ "),
 //                                                     "",
 //                                                     "(*.ini)");
 //    if(file_path.isEmpty()) return;
@@ -1072,7 +1073,7 @@ void scanSettingsDialog::on_pBtn_usrSetting_inp_clicked()
 void scanSettingsDialog::on_pBtn_usrSetting_exp_clicked()
 {
     QString filename = QFileDialog::getSaveFileName(nullptr,
-                                                    QStringLiteral("µ¼³öÅäÖÃÎÄ¼ş "),
+                                                    tr("å¯¼å‡ºé…ç½®æ–‡ä»¶ "),
                                                     "",
                                                     "(*.ini)");
     if(filename.isEmpty()) return;
@@ -1080,17 +1081,17 @@ void scanSettingsDialog::on_pBtn_usrSetting_exp_clicked()
     {
         filename += ".ini";
     }
-    //´´½¨iniÎÄ¼ş
+    //åˆ›å»ºiniæ–‡ä»¶
     QSettings *new_ini = new QSettings(filename,QSettings::IniFormat);
-    new_ini->setValue("base_colorModeIndex",ui->cbox_colorMode->currentIndex());//Ğ´ÈëÒ»¸ö²ÎÊı£¬·ñÔòiniÎÄ¼ş²»Éú³É
+    new_ini->setValue("base_colorModeIndex",ui->cbox_colorMode->currentIndex());//å†™å…¥ä¸€ä¸ªå‚æ•°ï¼Œå¦åˆ™iniæ–‡ä»¶ä¸ç”Ÿæˆ
     delete new_ini;
     QFileInfo file(filename);
     if(!file.exists())
     {
-        QMessageBox::warning(this,QStringLiteral("¾¯¸æ "),QStringLiteral("´´½¨ÅäÖÃÎÄ¼şÊ§°Ü¡£Çë¼ì²é´ÅÅÌÊ£Óà¿Õ¼ä»òµ±Ç°ÓÃ»§×éÈ¨ÏŞ¡£ "));
+        QMessageBox::warning(this,tr("è­¦å‘Š "),tr("åˆ›å»ºé…ç½®æ–‡ä»¶å¤±è´¥ã€‚è¯·æ£€æŸ¥ç£ç›˜å‰©ä½™ç©ºé—´æˆ–å½“å‰ç”¨æˆ·ç»„æƒé™ã€‚ "));
         return;
     }
-    //Éú³ÉÅäÖÃÎÄ¼ş
+    //ç”Ÿæˆé…ç½®æ–‡ä»¶
     QString name = file.completeBaseName();
     QString dir_path = file.absolutePath();
     add_ini(name, dir_path);
@@ -1098,8 +1099,8 @@ void scanSettingsDialog::on_pBtn_usrSetting_exp_clicked()
 void scanSettingsDialog::on_pBtn_usrSetting_save_clicked()
 {
     int a = QMessageBox::question(this,
-                          QStringLiteral("Ñ¯ÎÊ "),
-                          QStringLiteral("½«¸²¸Çµ±Ç°ÒÑÑ¡ÖĞµÄÅäÖÃ£¬ÊÇ·ñ¼ÌĞø£¿ "),
+                          tr("è¯¢é—® "),
+                          tr("å°†è¦†ç›–å½“å‰å·²é€‰ä¸­çš„é…ç½®ï¼Œæ˜¯å¦ç»§ç»­ï¼Ÿ "),
                           QMessageBox::Yes|QMessageBox::No,
                           QMessageBox::Yes);
     if(a == QMessageBox::Yes)
@@ -1158,8 +1159,8 @@ void scanSettingsDialog::add_usrSetting(QString name)
     else
     {
         int a = QMessageBox::question(this,
-                              QStringLiteral("Ñ¯ÎÊ "),
-                              QStringLiteral("ÒÑÓĞÏàÍ¬Ãû³ÆÅäÖÃ£¬ÊÇ·ñ¸²¸ÇÍ¬ÃûÅäÖÃ£¿ "),
+                              tr("è¯¢é—® "),
+                              tr("å·²æœ‰ç›¸åŒåç§°é…ç½®ï¼Œæ˜¯å¦è¦†ç›–åŒåé…ç½®ï¼Ÿ "),
                               QMessageBox::Yes|QMessageBox::No,
                               QMessageBox::Yes);
         if(a == QMessageBox::Yes)
@@ -1177,9 +1178,9 @@ void scanSettingsDialog::add_usrSetting(QString name)
 QString scanSettingsDialog::showIniInputDialog()
 {
     QDialog* d = new QDialog(this);
-    d->setWindowTitle(QStringLiteral("¿Éµ¼ÈëÅäÖÃÁĞ±í "));
+    d->setWindowTitle(tr("å¯å¯¼å…¥é…ç½®åˆ—è¡¨ "));
     QVBoxLayout* v = new QVBoxLayout(d);
-    //´´½¨¼ìË÷ÁĞ±í
+    //åˆ›å»ºæ£€ç´¢åˆ—è¡¨
     QListWidget* listWidget = new QListWidget;
     listWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     QStringList nameList = check_ini(m_iniDirPath);
@@ -1188,16 +1189,16 @@ QString scanSettingsDialog::showIniInputDialog()
         listWidget->addItem(name);
     }
     v->addWidget(listWidget);
-    //´´½¨´°¿Ú°´Å¥
-    QPushButton *inputBtn = new QPushButton(QStringLiteral("µ¼Èë "),d);
-    QPushButton *cancelBtn = new QPushButton(QStringLiteral("È¡Ïû "),d);
+    //åˆ›å»ºçª—å£æŒ‰é’®
+    QPushButton *inputBtn = new QPushButton(tr("å¯¼å…¥ "),d);
+    QPushButton *cancelBtn = new QPushButton(tr("å–æ¶ˆ "),d);
     QHBoxLayout* h = new QHBoxLayout(d);
     h->addWidget(inputBtn);
     h->addWidget(cancelBtn);
     v->addLayout(h);
     connect(inputBtn,SIGNAL(clicked(bool)),d,SLOT(accept()));
     connect(cancelBtn,SIGNAL(clicked(bool)),d,SLOT(reject()));
-    //´°¿ÚÂß¼­
+    //çª—å£é€»è¾‘
     QString retName;
     if(d->exec())
     {
@@ -1213,19 +1214,19 @@ QString scanSettingsDialog::showIniInputDialog()
 }
 QStringList scanSettingsDialog::check_ini(QString dirPath)
 {
-    //»ñÈ¡settingsÎÄ¼ş¼ĞÏÂµÄiniÎÄ¼şÁĞ±í
+    //è·å–settingsæ–‡ä»¶å¤¹ä¸‹çš„iniæ–‡ä»¶åˆ—è¡¨
     QDir dir(dirPath);
     QStringList filter;
     filter<<"*.ini";
     QFileInfoList ini_list;
     ini_list = dir.entryInfoList(filter, QDir::Files);
-    //»ñÈ¡µ±Ç°Ê×Ñ¡ÏîÁĞ±íÒÑ¼ÓÔØµÄÅäÖÃÁĞ±í
+    //è·å–å½“å‰é¦–é€‰é¡¹åˆ—è¡¨å·²åŠ è½½çš„é…ç½®åˆ—è¡¨
     QStringList name_list;
     for(int i = 0; i < ui->listWidget->count(); i++)
     {
         name_list.append(ui->listWidget->item(i)->text());
     }
-    //ÌŞ³ıÒÑ¼ÓÔØÅäÖÃ
+    //å‰”é™¤å·²åŠ è½½é…ç½®
     foreach(QFileInfo iniName,ini_list)
     {
         foreach(QString name,name_list)
@@ -1234,7 +1235,7 @@ QStringList scanSettingsDialog::check_ini(QString dirPath)
                 ini_list.removeOne(iniName);
         }
     }
-    //Éú³É·µ»ØÁĞ±í
+    //ç”Ÿæˆè¿”å›åˆ—è¡¨
     QStringList reList;
     foreach(QFileInfo iniName,ini_list)
     {
@@ -1363,7 +1364,7 @@ void scanSettingsDialog::delete_ini(QString name)
 void scanSettingsDialog::load_ini(QString name)
 {
     isUsrSettingChange = true;
-    QSettings *local_ini = new QSettings(m_iniDirPath+"/"+name+".ini",QSettings::IniFormat);//½öÖ§³Ö¼ÓÔØappDirÏÂµÄiniÅäÖÃÎÄ¼ş
+    QSettings *local_ini = new QSettings(m_iniDirPath+"/"+name+".ini",QSettings::IniFormat);//ä»…æ”¯æŒåŠ è½½appDirä¸‹çš„inié…ç½®æ–‡ä»¶
     ui->cbox_colorMode->setCurrentIndex(local_ini->value("base_colorModeIndex",0).toInt());
     ui->cbtn_multiStream->setChecked(local_ini->value("base_isMultiOutput",false).toBool());
     ui->cbox_multiStream->setCurrentIndex(local_ini->value("base_multiOutType",0).toInt());
@@ -1379,20 +1380,20 @@ void scanSettingsDialog::load_ini(QString name)
     ui->spin_contrast->setValue(local_ini->value("BCG_contrast",4).toInt());
     ui->dSpin_gamma->setValue(local_ini->value("BCG_gamma",1.0f).toDouble());
     ui->cbtn_colorLineSwitch->setChecked(local_ini->value("BCG_isCustomGama",false).toBool());
-    //ÉèÖÃ³õÊ¼»¯ÇúÏßpoint
+    //è®¾ç½®åˆå§‹åŒ–æ›²çº¿point
     QPoint start(0,0);
     QPoint end(255,255);
     QList<QVariant> init_list;
     init_list.append(QVariant(start));
     init_list.append(QVariant(end));
-    //¶ÁÈ¡5ÌõÇúÏßpoint
+    //è¯»å–5æ¡æ›²çº¿point
     QList<QVariant> RGBline,Rline,Gline,Bline,GRAYline;
     RGBline = local_ini->value("BCG_RGBline",init_list).toList();
     Rline = local_ini->value("BCG_Rline",init_list).toList();
     Gline = local_ini->value("BCG_Gline",init_list).toList();
     Bline = local_ini->value("BCG_Bline",init_list).toList();
     GRAYline = local_ini->value("BCG_greyline",init_list).toList();
-    //¸³ÖµKeyPoint
+    //èµ‹å€¼KeyPoint
     rgbKeyPoint.clear();
     for(int i=0;i<4;i++)
     {
@@ -1495,7 +1496,6 @@ void scanSettingsDialog::load_ini(QString name)
 }
 void scanSettingsDialog::load_iniList()
 {
-    QSettings *app_ini = new QSettings(m_appDirPath+"/GSCAN_paraConfig.ini",QSettings::IniFormat);
     int index = app_ini->value("userSettings_index",0).toInt();
     if(index != -1)
     {
@@ -1503,12 +1503,10 @@ void scanSettingsDialog::load_iniList()
         ui->listWidget->addItems(list);
         ui->listWidget->setCurrentRow(index);
     }
-    delete app_ini;
 }
 void scanSettingsDialog::save_iniList()
 {
-    QSettings *app_ini = new QSettings(m_appDirPath+"/GSCAN_paraConfig.ini",QSettings::IniFormat);
-    int index = -1;//±êÊ¶ÁĞ±íÊÇ·ñÎª¿Õ£¨-1Îª¿Õ£©¼°¼ÇÂ¼µ±Ç°Ñ¡ÖĞÎ»ÖÃ
+    int index = -1;//æ ‡è¯†åˆ—è¡¨æ˜¯å¦ä¸ºç©ºï¼ˆ-1ä¸ºç©ºï¼‰åŠè®°å½•å½“å‰é€‰ä¸­ä½ç½®
     int count = ui->listWidget->count();
     if(count > 0)
     {
@@ -1521,5 +1519,4 @@ void scanSettingsDialog::save_iniList()
         app_ini->setValue("userSettings_list",list);
     }
     app_ini->setValue("userSettings_index",index);
-    delete app_ini;
 }

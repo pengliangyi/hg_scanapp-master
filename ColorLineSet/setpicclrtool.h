@@ -1,4 +1,4 @@
-#ifndef SETPICCLRTOOL_H
+ï»¿#ifndef SETPICCLRTOOL_H
 #define SETPICCLRTOOL_H
 
 #include "colorlinesetdef.h"
@@ -51,8 +51,8 @@ private:
     void setGrayKeyPoint(const QList<QPoint>& pVec);
 
 private slots:
-    void mouseCoordSlot(QPoint);//¸ù¾İQPointÉèÖÃQLineEditµÄÖµ
-    void lineEditEnable(bool);//ÉèÖÃÁ½¸öLineEditµÄÊ¹ÄÜ×´Ì¬
+    void mouseCoordSlot(QPoint);//set QLineEdit value by QPoint setting    
+    void lineEditEnable(bool);//set 2 LineEdit enable status
     void lineChangeSlot();
 
     void on_colorSetCmb_currentIndexChanged(int index);

@@ -1,4 +1,4 @@
-#ifndef GETIMGTHREAD_H
+﻿#ifndef GETIMGTHREAD_H
 #define GETIMGTHREAD_H
 
 #include <QThread>

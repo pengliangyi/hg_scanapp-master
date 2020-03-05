@@ -1,4 +1,4 @@
-#include "chosenpagedialog.h"
+﻿#include "chosenpagedialog.h"
 #include "ui_chosenpagedialog.h"
 #include "mainwindow.h"
 #include <QCloseEvent>

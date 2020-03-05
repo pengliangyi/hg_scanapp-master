@@ -1,4 +1,4 @@
-#include "consumestatusdialog.h"
+﻿#include "consumestatusdialog.h"
 #include "ui_consumestatusdialog.h"
 #include <QMessageBox>
 #include <thread>
@@ -21,8 +21,8 @@ consumeStatusDialog::~consumeStatusDialog()
 void consumeStatusDialog::on_pbtn_resetRollerNum_clicked()
 {
     int ret = QMessageBox::question(this,
-                                    QStringLiteral("重要 "),
-                                    QStringLiteral("是否确认要重置当前辊轴已扫描总数？\n""(此操作仅重置辊轴已扫描张数，不会清除历史扫描总数) "),
+                                    tr("重要 "),
+                                    tr("是否确认要重置当前辊轴已扫描总数？\n""(此操作仅重置辊轴已扫描张数，不会清除历史扫描总数) "),
                                     QMessageBox::Ok | QMessageBox::Cancel,
                                     QMessageBox::Cancel);
     switch(ret)
@@ -31,7 +31,7 @@ void consumeStatusDialog::on_pbtn_resetRollerNum_clicked()
       /*  m_scanner->clr_roller_scaned();
         if(m_scanner->get_roller_scaned())
         {
-            QMessageBox::warning(this,QStringLiteral("警告 "),QStringLiteral("重置辊轴已扫描总数失败，请重试！ "));
+            QMessageBox::warning(this,tr("警告 "),tr("重置辊轴已扫描总数失败，请重试！ "));
         }
         else
         {

@@ -1,4 +1,4 @@
-#ifndef CUTDIALOGDEF_H
+﻿#ifndef CUTDIALOGDEF_H
 #define CUTDIALOGDEF_H
 #include <qglobal.h>
 #if defined(GCUTDIALOG_LIBRARY)

@@ -1,4 +1,4 @@
-#include "CallbackNotice.h"
+﻿#include "CallbackNotice.h"
 
 CallbackNotice::CallbackNotice(QObject *parent) : QObject(parent)
 {

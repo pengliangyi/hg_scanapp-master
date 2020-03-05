@@ -1,4 +1,4 @@
-#include "FileExport.h"
+﻿#include "FileExport.h"
 #include <QFile>
 #include <QPdfWriter>
 #include <QPainter>

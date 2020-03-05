@@ -1,4 +1,4 @@
-#ifndef CONSUMESTATUSDIALOG_H
+﻿#ifndef CONSUMESTATUSDIALOG_H
 #define CONSUMESTATUSDIALOG_H
 
 #include <QDialog>

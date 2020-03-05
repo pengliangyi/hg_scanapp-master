@@ -1,4 +1,4 @@
-#include "mygraphicsscene.h"
+﻿#include "mygraphicsscene.h"
 #include <QGraphicsSceneWheelEvent>
 #include <QGraphicsItem>
 

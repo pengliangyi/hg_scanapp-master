@@ -1,4 +1,4 @@
-#include "scanlotsdialog.h"
+ï»¿#include "scanlotsdialog.h"
 #include <QFileDialog>
 #include <QVBoxLayout>
 #include <QComboBox>
@@ -23,7 +23,7 @@ scanLotsDialog::scanLotsDialog(QWidget *parent) :
     box->addItems(lst);
 
     QLabel* lab = new QLabel(this);
-    lab->setText(QStringLiteral("Ñ¡ÔñÒª±£´æµÄÎÄ¼ş¸ñÊ½:"));
+    lab->setText(tr("é€‰æ‹©è¦ä¿å­˜çš„æ–‡ä»¶æ ¼å¼:"));
 
     QHBoxLayout* f = new QHBoxLayout(nullptr);
     QSpacerItem* s = new QSpacerItem(100,50);

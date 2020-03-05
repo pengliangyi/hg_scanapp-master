@@ -1,4 +1,4 @@
-#ifndef PRESCANDIALOG_H
+﻿#ifndef PRESCANDIALOG_H
 #define PRESCANDIALOG_H
 
 #include <QDialog>
